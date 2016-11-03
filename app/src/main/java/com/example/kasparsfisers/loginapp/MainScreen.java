@@ -75,7 +75,6 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         headerUser.setText(preferences.loginName(value));
         headerEmail.setText(preferences.loginEmail(value));
 
-       // mCurrentPetUri = ContentUris.withAppendedId(PetEntry.CONTENT_URI, id);
 
                 drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -252,6 +251,10 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         if (v.getId()==R.id.list) {
+
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            int position = info.position;
+            mCurrentPetUri = ContentUris.withAppendedId(LocationEntry.CONTENT_URI, position);
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.menu_list, menu);
         }
@@ -262,7 +265,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch(item.getItemId()) {
             case R.id.delete:
-                // remove stuff here
+                deleteCoord();
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -274,27 +277,28 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
     }
 
-//    private void deleteCoord() {
-//
-//        Uri currentPetUri = ContentUris.withAppendedId(PetEntry.CONTENT_URI, id);
-//        if (mCurrentPetUri != null) {
-//            // Call the ContentResolver to delete the pet at the given content URI.
-//            // Pass in null for the selection and selection args because the mCurrentPetUri
-//            // content URI already identifies the pet that we want.
-//            int rowsDeleted = getContentResolver().delete(mCurrentPetUri, null, null);
-//
-//
-//            // Show a toast message depending on whether or not the delete was successful.
-//            if (rowsDeleted == 0) {
-//                // If no rows were deleted, then there was an error with the delete.
-//                Toast.makeText(this, getString(R.string.editor_delete_pet_failed),
-//                        Toast.LENGTH_SHORT).show();
-//            } else {
-//                // Otherwise, the delete was successful and we can display a toast.
-//                Toast.makeText(this, getString(R.string.editor_delete_pet_successful),
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//            finish();
-//        }
-//    }
+   private void deleteCoord() {
+
+
+
+      if (mCurrentPetUri != null) {
+           // Call the ContentResolver to delete the pet at the given content URI.
+            // Pass in null for the selection and selection args because the mCurrentPetUri
+            // content URI already identifies the pet that we want.
+            int rowsDeleted = getContentResolver().delete(mCurrentPetUri, null, null);
+
+
+            // Show a toast message depending on whether or not the delete was successful.
+            if (rowsDeleted == 0) {
+                // If no rows were deleted, then there was an error with the delete.
+                Toast.makeText(this,"Not Deleted",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // Otherwise, the delete was successful and we can display a toast.
+               Toast.makeText(this, "Deleted",
+                        Toast.LENGTH_SHORT).show();
+            }
+            finish();
+        }
+    }
 }
