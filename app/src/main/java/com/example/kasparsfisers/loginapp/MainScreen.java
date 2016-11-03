@@ -19,26 +19,35 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kasparsfisers.loginapp.data.LocationContract;
 import com.example.kasparsfisers.loginapp.data.LocationContract.LocationEntry;
 
-public class MainScreen extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,NavigationView.OnNavigationItemSelectedListener {
+import static android.R.attr.id;
+
+public class MainScreen extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener {
 
     // Identifier for coordinate data loader
     private static final int COORDINATE_LOADER = 0;
-    private boolean permissionGranted = true;
-
+    MenuItem itemTrack;
     LocationCursorAdapter mCursorAdapter;
     DrawerLayout drawer;
-    Button mTracking, mLogout;
     SharedPreferencesUtils preferences;
+
+    TextView headerUser;
+    TextView headerEmail;
+    private Uri mCurrentPetUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         setContentView(R.layout.activity_drawable);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        preferences = new SharedPreferencesUtils(this);
 
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -53,45 +63,33 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        String value = preferences.sessionData();
 
-        mTracking = (Button) findViewById(R.id.btnLoc);
-        mLogout = (Button) findViewById(R.id.btnLogout);
-        preferences = new SharedPreferencesUtils(this);
+        Menu menu = navigationView.getMenu();
+        View header = navigationView.getHeaderView(0);
+
+        itemTrack = menu.findItem(R.id.nav_track);
+        headerUser = (TextView) header.findViewById(R.id.textViewUserName);
+        headerEmail = (TextView) header.findViewById(R.id.textViewEmail);
+
+        headerUser.setText(preferences.loginName(value));
+        headerEmail.setText(preferences.loginEmail(value));
+
+       // mCurrentPetUri = ContentUris.withAppendedId(PetEntry.CONTENT_URI, id);
+
+                drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
         if (LocationService.isInstanceCreated()) {
-            mTracking.setText(R.string.stop);
+            itemTrack.setTitle(R.string.stop);
         } else {
-            mTracking.setText(R.string.start);
+            itemTrack.setTitle(R.string.start);
         }
 
-        mTracking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                if (checkPermissions()) {
-                    serviceEnable();
-                } else {
-                    askPermissions();
-                }
-
-
-            }
-        });
-
-
-        mLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                preferences.sessionSetLoggedIn(false);
-                startActivity(new Intent(MainScreen.this, LoginActivity.class));
-                finish();
-            }
-        });
-
         ListView coordinateListView = (ListView) findViewById(R.id.list);
-
-
+        View emptyView = findViewById(R.id.empty_view);
+        coordinateListView.setEmptyView(emptyView);
+        registerForContextMenu(coordinateListView);
         mCursorAdapter = new LocationCursorAdapter(this, null);
         coordinateListView.setAdapter(mCursorAdapter);
 
@@ -101,7 +99,6 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(MainScreen.this, GoogleMaps.class);
-
                 Uri currentCoordinatesUri = ContentUris.withAppendedId(LocationEntry.CONTENT_URI, id);
                 intent.setData(currentCoordinatesUri);
                 startActivity(intent);
@@ -184,11 +181,11 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         if (!LocationService.isInstanceCreated()) {
 
             startService(new Intent(getBaseContext(), LocationService.class));
-            mTracking.setText(R.string.stop);
+            itemTrack.setTitle(R.string.stop);
 
         } else {
             stopService(new Intent(getBaseContext(), LocationService.class));
-            mTracking.setText(R.string.start);
+            itemTrack.setTitle(R.string.start);
         }
 
     }
@@ -208,12 +205,32 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-       if (id == R.id.nav_share) {
 
-           startActivity(new Intent(MainScreen.this, SliderActivity.class));
-        } else if (id == R.id.nav_send) {
+        if (id == R.id.nav_slider) {
+
+            startActivity(new Intent(MainScreen.this, SliderActivity.class));
+        } else if (id == R.id.nav_logout) {
+
+            preferences.sessionSetLoggedIn(false);
+            preferences.sessionSetData("");
+            startActivity(new Intent(MainScreen.this, LoginActivity.class));
+            finish();
+
+        } else if (id == R.id.nav_track) {
+
+            if (checkPermissions()) {
+                serviceEnable();
+
+            } else {
+                askPermissions();
+            }
+
+        }else if (id == R.id.nav_delete_all) {
+
+            deleteAllCoords();
 
         }
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -230,4 +247,54 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId()==R.id.list) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_list, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()) {
+            case R.id.delete:
+                // remove stuff here
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void deleteAllCoords() {
+        int rowsDeleted = getContentResolver().delete(LocationEntry.CONTENT_URI, null, null);
+        Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
+    }
+
+//    private void deleteCoord() {
+//
+//        Uri currentPetUri = ContentUris.withAppendedId(PetEntry.CONTENT_URI, id);
+//        if (mCurrentPetUri != null) {
+//            // Call the ContentResolver to delete the pet at the given content URI.
+//            // Pass in null for the selection and selection args because the mCurrentPetUri
+//            // content URI already identifies the pet that we want.
+//            int rowsDeleted = getContentResolver().delete(mCurrentPetUri, null, null);
+//
+//
+//            // Show a toast message depending on whether or not the delete was successful.
+//            if (rowsDeleted == 0) {
+//                // If no rows were deleted, then there was an error with the delete.
+//                Toast.makeText(this, getString(R.string.editor_delete_pet_failed),
+//                        Toast.LENGTH_SHORT).show();
+//            } else {
+//                // Otherwise, the delete was successful and we can display a toast.
+//                Toast.makeText(this, getString(R.string.editor_delete_pet_successful),
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//            finish();
+//        }
+//    }
 }

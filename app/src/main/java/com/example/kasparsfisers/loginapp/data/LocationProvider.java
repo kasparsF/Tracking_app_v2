@@ -112,7 +112,31 @@ public class LocationProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        // Get writeable database
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+        // Track the number of rows that were deleted
+        int rowsDeleted;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case COORDINATES:
+                // Delete all rows that match the selection and selection args
+                rowsDeleted = database.delete(LocationEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case COORDINATE_ID:
+                // Delete a single row given by the ID in the URI
+                selection = LocationEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                rowsDeleted = database.delete(LocationEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
+        }
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        // Return the number of rows deleted
+        return rowsDeleted;
     }
 
     @Override

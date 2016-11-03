@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     } else {
                         preferences.sessionSetLoggedIn(true);
+                        preferences.sessionSetData(user+pass);
                         startActivity(new Intent(LoginActivity.this, MainScreen.class));
                         finish();
                         showViews();

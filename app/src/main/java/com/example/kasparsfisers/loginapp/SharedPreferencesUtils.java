@@ -17,12 +17,21 @@ public class SharedPreferencesUtils {
 
     public void register(String newUser, String newPass, String newEmail, String newName) {
         editor.putString(newUser + newPass + "data", newUser + "\n" + newEmail);
-        editor.putString(newUser + newPass + "info", newName);
+        editor.putString(newUser + newPass + "name", newName);
+        editor.putString(newUser + newPass + "email", newEmail);
         editor.apply();
     }
 
     public String login(String user, String pass) {
-        return prefs.getString(user + pass + "info", "");
+        return prefs.getString(user + pass + "data", "");
+    }
+
+    public String loginName(String data) {
+        return prefs.getString(data + "name", "");
+    }
+
+    public String loginEmail(String data) {
+        return prefs.getString(data + "email", "");
     }
 
 
@@ -33,5 +42,15 @@ public class SharedPreferencesUtils {
 
     public Boolean sessionLoggedIn() {
         return prefs.getBoolean("session",false);
+    }
+
+
+    public void sessionSetData(String data) {
+        editor.putString("sessionData",data);
+        editor.apply();
+    }
+
+    public String sessionData() {
+        return prefs.getString("sessionData","");
     }
 }

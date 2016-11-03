@@ -2,18 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
+    <item
+        android:id="@+id/nav_track"
+        android:icon="@drawable/ic_menu_share"
+        android:title="Start Tracking" />
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Slider" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+    <item
+        android:id="@+id/nav_slider"
+        android:icon="@drawable/ic_menu_send"
+        android:title="Slider" />
+
+    <item
+        android:id="@+id/nav_delete_all"
+        android:icon="@drawable/ic_menu_send"
+        android:title="Delete All" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_menu_send"
+        android:title="Logout" />
+
 
 </menu>
