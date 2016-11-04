@@ -9,15 +9,12 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -26,15 +23,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kasparsfisers.loginapp.data.LocationContract;
 import com.example.kasparsfisers.loginapp.data.LocationContract.LocationEntry;
-
-import static android.R.attr.id;
 
 public class MainScreen extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,36 +41,39 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
 
     TextView headerUser;
     TextView headerEmail;
-    private Uri mCurrentPetUri;
+    private Uri mCurrentUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawable);
+        // Getting toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        preferences = new SharedPreferencesUtils(this);
 
+        //Home button inic
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
+        //Menu navigation
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        String value = preferences.sessionData();
 
+        //Changing navigation menu item views
         Menu menu = navigationView.getMenu();
         View header = navigationView.getHeaderView(0);
-
         itemTrack = menu.findItem(R.id.nav_track);
         headerUser = (TextView) header.findViewById(R.id.textViewUserName);
         headerEmail = (TextView) header.findViewById(R.id.textViewEmail);
 
+        //PreferencesUtil method getting data
+        preferences = new SharedPreferencesUtils(this);
+        String value = preferences.sessionData();
         headerUser.setText(preferences.loginName(value));
         headerEmail.setText(preferences.loginEmail(value));
 
-
-                drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
         if (LocationService.isInstanceCreated()) {
@@ -84,7 +81,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         } else {
             itemTrack.setTitle(R.string.start);
         }
-
+        // Setting up listView and adding adapter and contextMenu
         ListView coordinateListView = (ListView) findViewById(R.id.list);
         View emptyView = findViewById(R.id.empty_view);
         coordinateListView.setEmptyView(emptyView);
@@ -92,7 +89,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         mCursorAdapter = new LocationCursorAdapter(this, null);
         coordinateListView.setAdapter(mCursorAdapter);
 
-
+        // List item view listener
         coordinateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -104,10 +101,11 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
             }
         });
 
-
+        // start loader
         getLoaderManager().initLoader(COORDINATE_LOADER, null, this);
     }
 
+    //Cursor loading
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
@@ -124,18 +122,21 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
                 LocationContract.LocationEntry._ID + " DESC");
     }
 
+    // after Cursor loads
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Update cursor containing updated coordinate data
         mCursorAdapter.swapCursor(data);
     }
 
+    //Cursor reset
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         // called when the data needs to be deleted
         mCursorAdapter.swapCursor(null);
     }
 
+    // After permission granting or denying
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -158,6 +159,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         }
     }
 
+    // Checking permissions status
     private boolean checkPermissions() {
 
         if (ActivityCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -169,12 +171,14 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
 
     }
 
+    // Asking for location permissions
     private void askPermissions() {
         ActivityCompat.requestPermissions(MainScreen.this,
                 new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                 1);
     }
 
+    // Location service method
     private void serviceEnable() {
 
         if (!LocationService.isInstanceCreated()) {
@@ -189,6 +193,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
 
     }
 
+    // Back button press
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -199,6 +204,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         }
     }
 
+    // Navigation menu item click methods
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -224,18 +230,18 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
                 askPermissions();
             }
 
-        }else if (id == R.id.nav_delete_all) {
+        } else if (id == R.id.nav_delete_all) {
 
             deleteAllCoords();
 
         }
-
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    // Home button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -247,23 +253,26 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         return super.onOptionsItemSelected(item);
     }
 
+    // On item long click get id and pass it
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId()==R.id.list) {
+        if (v.getId() == R.id.list) {
 
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            int position = info.position;
-            mCurrentPetUri = ContentUris.withAppendedId(LocationEntry.CONTENT_URI, position);
+            long viewID = info.id;
+
+            mCurrentUri = ContentUris.withAppendedId(LocationEntry.CONTENT_URI, viewID);
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.menu_list, menu);
         }
     }
 
+    // getting popup menu
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.delete:
                 deleteCoord();
                 return true;
@@ -272,33 +281,27 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
         }
     }
 
+
+    // Method for deleting all data from DB
     private void deleteAllCoords() {
         int rowsDeleted = getContentResolver().delete(LocationEntry.CONTENT_URI, null, null);
-        Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
+        Log.v("MainScree: ", rowsDeleted + " rows deleted from database");
     }
 
-   private void deleteCoord() {
+    // Method for deleting specific placeName
+    private void deleteCoord() {
 
+        if (mCurrentUri != null) {
+            int rowsDeleted = getContentResolver().delete(mCurrentUri, null, null);
 
-
-      if (mCurrentPetUri != null) {
-           // Call the ContentResolver to delete the pet at the given content URI.
-            // Pass in null for the selection and selection args because the mCurrentPetUri
-            // content URI already identifies the pet that we want.
-            int rowsDeleted = getContentResolver().delete(mCurrentPetUri, null, null);
-
-
-            // Show a toast message depending on whether or not the delete was successful.
             if (rowsDeleted == 0) {
-                // If no rows were deleted, then there was an error with the delete.
-                Toast.makeText(this,"Not Deleted",
+                Toast.makeText(this, "Cant Delete",
                         Toast.LENGTH_SHORT).show();
             } else {
-                // Otherwise, the delete was successful and we can display a toast.
-               Toast.makeText(this, "Deleted",
+                Toast.makeText(this, "Deleted",
                         Toast.LENGTH_SHORT).show();
             }
-            finish();
+
         }
     }
 }

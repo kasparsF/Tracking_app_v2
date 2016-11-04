@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 
 
-public class FirstFragment extends Fragment {
+public class SecondFragment extends Fragment {
 
 
 
-    public FirstFragment() {
+    public SecondFragment() {
         // Required empty public constructor
     }
 
@@ -22,7 +22,7 @@ public class FirstFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_first, container, false);
+        View view = inflater.inflate(R.layout.fragment_second, container, false);
 
         return view;
     }

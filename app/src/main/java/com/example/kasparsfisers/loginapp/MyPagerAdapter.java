@@ -5,9 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-/**
- * Created by kaspars.fisers on 11/2/2016.
- */
 
 public  class MyPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
@@ -23,9 +20,9 @@ public  class MyPagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return new FirstFragment();
         } else if (position == 1) {
-            return new FirstFragment();
+            return new SecondFragment();
         } else {
-            return new FirstFragment();
+            return new ThirdFragment();
         }
     }
 

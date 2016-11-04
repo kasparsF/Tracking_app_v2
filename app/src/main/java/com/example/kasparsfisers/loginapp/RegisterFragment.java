@@ -1,5 +1,6 @@
 package com.example.kasparsfisers.loginapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Patterns;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import static com.google.android.gms.analytics.internal.zzy.f;
 
 public class RegisterFragment extends DialogFragment {
     EditText username, name, email, password, password2;
@@ -48,6 +51,10 @@ public class RegisterFragment extends DialogFragment {
 
                     Toast.makeText(getActivity(), R.string.registered, Toast.LENGTH_SHORT).show();
                     dismiss();
+                    preferences.sessionSetLoggedIn(true);
+                    preferences.sessionSetData(newUser+newPass);
+                    startActivity(new Intent(getContext(), SliderActivity.class));
+
 
                 }else{
                     Toast.makeText(getActivity(), R.string.registerError, Toast.LENGTH_SHORT).show();

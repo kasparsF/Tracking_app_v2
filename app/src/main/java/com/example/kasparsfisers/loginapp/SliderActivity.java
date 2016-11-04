@@ -12,9 +12,7 @@ import static android.R.attr.layout_height;
 import static android.R.attr.layout_width;
 
 
-/**
- * Created by kaspars.fisers on 11/2/2016.
- */
+
 
 public class SliderActivity  extends AppCompatActivity {
 
@@ -43,4 +41,5 @@ public class SliderActivity  extends AppCompatActivity {
 
 
     }
+
 }

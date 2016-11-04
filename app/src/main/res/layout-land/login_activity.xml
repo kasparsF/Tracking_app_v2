@@ -8,7 +8,7 @@
     android:padding="25dp"
     tools:context="com.example.kasparsfisers.loginapp.LoginActivity"
     android:orientation="horizontal"
-    android:background="@drawable/back1land">
+    android:background="@drawable/background_imaga_land">
 
     <LinearLayout
         android:layout_width="0dp"

@@ -27,21 +27,21 @@
         android:layout_centerInParent="true">
 
         <ImageView
-            android:id="@+id/empty_shelter_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/empty_db_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/loading"/>
+            android:src="@drawable/empty_view"/>
 
         <TextView
             android:id="@+id/empty_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/empty_shelter_image"
+            android:layout_below="@+id/empty_db_image"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-medium"
             android:paddingTop="16dp"
-            android:text="erveverreverv"
+            android:text="No Data in Database"
             android:textAppearance="?android:textAppearanceMedium"/>
 
         <TextView
@@ -52,7 +52,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:paddingTop="8dp"
-            android:text="revbeverver"
+            android:text="Add a Location"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#A2AAB0"/>
     </RelativeLayout>
