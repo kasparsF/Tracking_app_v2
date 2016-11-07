@@ -1,4 +1,4 @@
-package com.example.kasparsfisers.loginapp.activityes;
+package com.example.kasparsfisers.loginapp.activities;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -239,6 +239,10 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
             deleteAllCoords();
 
         }else if (id == R.id.nav_show_route) {
+
+            Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
+
+        }else if (id == R.id.nav_user_profile) {
 
             Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
 

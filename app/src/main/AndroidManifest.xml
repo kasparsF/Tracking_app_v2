@@ -15,14 +15,14 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activityes.LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activityes.SliderActivity" />
+        <activity android:name=".activities.SliderActivity" />
 
         <service android:name=".services.LocationService" />
 
@@ -44,10 +44,10 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activityes.GoogleMapsActivity"
+            android:name=".activities.GoogleMapsActivity"
             android:label="@string/title_activity_google_maps" />
         <activity
-            android:name=".activityes.MainScreen"
+            android:name=".activities.MainScreen"
             android:theme="@style/AppTheme.NoActionBar" />
 
     </application>

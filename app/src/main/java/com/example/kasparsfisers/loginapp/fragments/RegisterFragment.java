@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.kasparsfisers.loginapp.R;
-import com.example.kasparsfisers.loginapp.activityes.SliderActivity;
+import com.example.kasparsfisers.loginapp.activities.SliderActivity;
 import com.example.kasparsfisers.loginapp.utils.Functions;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 

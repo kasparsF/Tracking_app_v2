@@ -1,4 +1,4 @@
-package com.example.kasparsfisers.loginapp.activityes;
+package com.example.kasparsfisers.loginapp.activities;
 
 import android.app.LoaderManager;
 import android.content.CursorLoader;

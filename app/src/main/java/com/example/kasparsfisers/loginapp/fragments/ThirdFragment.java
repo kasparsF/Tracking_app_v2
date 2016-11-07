@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.kasparsfisers.loginapp.activityes.MainScreen;
+import com.example.kasparsfisers.loginapp.activities.MainScreen;
 import com.example.kasparsfisers.loginapp.R;
 
 

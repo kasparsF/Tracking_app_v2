@@ -1,4 +1,4 @@
-package com.example.kasparsfisers.loginapp.activityes;
+package com.example.kasparsfisers.loginapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
