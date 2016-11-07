@@ -1,4 +1,4 @@
-package com.example.kasparsfisers.loginapp;
+package com.example.kasparsfisers.loginapp.activityes;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -27,6 +27,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kasparsfisers.loginapp.adapters.LocationCursorAdapter;
+import com.example.kasparsfisers.loginapp.services.LocationService;
+import com.example.kasparsfisers.loginapp.R;
+import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
 import com.example.kasparsfisers.loginapp.data.LocationContract.LocationEntry;
 
@@ -94,7 +98,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(MainScreen.this, GoogleMaps.class);
+                Intent intent = new Intent(MainScreen.this, GoogleMapsActivity.class);
                 Uri currentCoordinatesUri = ContentUris.withAppendedId(LocationEntry.CONTENT_URI, id);
                 intent.setData(currentCoordinatesUri);
                 startActivity(intent);
@@ -234,6 +238,10 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
 
             deleteAllCoords();
 
+        }else if (id == R.id.nav_show_route) {
+
+            Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
+
         }
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -271,7 +279,6 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
     // getting popup menu
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.delete:
                 deleteCoord();

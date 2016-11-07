@@ -1,4 +1,4 @@
-package com.example.kasparsfisers.loginapp;
+package com.example.kasparsfisers.loginapp.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +13,15 @@ public class SharedPreferencesUtils {
         this.context = context;
         prefs = context.getSharedPreferences("MYPREFS", Context.MODE_PRIVATE);
         editor = prefs.edit();
+    }
+
+    private static SharedPreferencesUtils instance;
+
+    public static SharedPreferencesUtils getInstance(Context ctx){
+        if(instance == null){
+            instance = new SharedPreferencesUtils(ctx);
+        }
+        return  instance;
     }
 
     public void register(String newUser, String newPass, String newEmail, String newName) {

@@ -1,4 +1,4 @@
-package com.example.kasparsfisers.loginapp;
+package com.example.kasparsfisers.loginapp.activityes;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.kasparsfisers.loginapp.R;
+import com.example.kasparsfisers.loginapp.fragments.RegisterFragment;
+import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     EditText logUser, logPass;

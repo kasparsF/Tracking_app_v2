@@ -1,4 +1,4 @@
-package com.example.kasparsfisers.loginapp;
+package com.example.kasparsfisers.loginapp.activityes;
 
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,7 +18,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
+public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
     private static final int EXISTING_COORDINATES_LOADER = 0;
     private static final String LOCATION_SEPARATOR = ",";
     private Uri mCurrentCoordinatesUri;
@@ -38,7 +39,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback, 
 
         mCurrentCoordinatesUri = intent.getData();
 
-        getLoaderManager().initLoader(EXISTING_COORDINATES_LOADER, null, this);
+
 
     }
 
@@ -46,7 +47,7 @@ public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback, 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        getLoaderManager().initLoader(EXISTING_COORDINATES_LOADER, null, this);
         // Sets the map type to be "hybrid"
 
     }

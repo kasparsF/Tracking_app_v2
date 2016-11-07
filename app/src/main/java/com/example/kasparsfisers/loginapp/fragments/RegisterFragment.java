@@ -1,4 +1,4 @@
-package com.example.kasparsfisers.loginapp;
+package com.example.kasparsfisers.loginapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static com.google.android.gms.analytics.internal.zzy.f;
+import com.example.kasparsfisers.loginapp.R;
+import com.example.kasparsfisers.loginapp.activityes.SliderActivity;
+import com.example.kasparsfisers.loginapp.utils.Functions;
+import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 
 public class RegisterFragment extends DialogFragment {
     EditText username, name, email, password, password2;

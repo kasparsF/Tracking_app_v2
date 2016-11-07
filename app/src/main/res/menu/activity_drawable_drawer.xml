@@ -8,6 +8,11 @@
         android:title="Start Tracking" />
 
     <item
+        android:id="@+id/nav_show_route"
+        android:icon="@drawable/ic_menu_send"
+        android:title="Show Route" />
+
+    <item
         android:id="@+id/nav_slider"
         android:icon="@drawable/ic_menu_send"
         android:title="Slider" />

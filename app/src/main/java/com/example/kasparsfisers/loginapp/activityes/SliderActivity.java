@@ -1,17 +1,19 @@
-package com.example.kasparsfisers.loginapp;
+package com.example.kasparsfisers.loginapp.activityes;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.kasparsfisers.loginapp.adapters.MyPagerAdapter;
+import com.example.kasparsfisers.loginapp.R;
+import com.example.kasparsfisers.loginapp.fragments.FirstFragment;
+import com.example.kasparsfisers.loginapp.fragments.SecondFragment;
+import com.example.kasparsfisers.loginapp.fragments.ThirdFragment;
+
+import java.util.ArrayList;
+
 import me.relex.circleindicator.CircleIndicator;
-
-import static android.R.attr.id;
-import static android.R.attr.layout_height;
-import static android.R.attr.layout_width;
-
-
 
 
 public class SliderActivity  extends AppCompatActivity {
@@ -27,8 +29,15 @@ public class SliderActivity  extends AppCompatActivity {
         // Find the view pager that will allow the user to swipe between fragments
         ViewPager viewPager = (ViewPager) findViewById(R.id.vpPager);
 
+        ArrayList<Fragment> fragments = new ArrayList<>();
+
+        fragments.add(new FirstFragment());
+        fragments.add(new SecondFragment());
+        fragments.add(new FirstFragment());
+        fragments.add(new ThirdFragment());
+
         // Create an adapter that knows which fragment should be shown on each page
-        MyPagerAdapter adapter = new MyPagerAdapter(this, getSupportFragmentManager());
+        MyPagerAdapter adapter = new MyPagerAdapter(this, getSupportFragmentManager(), fragments);
 
         // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
@@ -36,9 +45,6 @@ public class SliderActivity  extends AppCompatActivity {
 
         CircleIndicator indicator = (CircleIndicator)findViewById(R.id.indicator);
         indicator.setViewPager(viewPager);
-
-
-
 
     }
 
