@@ -6,9 +6,9 @@
     android:gravity="center">
 
     <TextView
-        android:text="2"
+        android:text="Text about App!  Text about App!  Text about App!  Text about App!  Text about App!  Text about App!"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="60sp" />
+        android:textSize="45sp" />
 </LinearLayout>

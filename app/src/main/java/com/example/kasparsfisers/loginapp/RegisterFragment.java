@@ -53,7 +53,8 @@ public class RegisterFragment extends DialogFragment {
                     dismiss();
                     preferences.sessionSetLoggedIn(true);
                     preferences.sessionSetData(newUser+newPass);
-                    startActivity(new Intent(getContext(), SliderActivity.class));
+                    startActivity(new Intent(getActivity(), SliderActivity.class));
+                    getActivity().finish();
 
 
                 }else{

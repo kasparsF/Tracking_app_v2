@@ -34,6 +34,7 @@ public class ThirdFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), MainScreen.class);
                 getActivity().startActivity(intent);
+                getActivity().finish();
 
             }
         });
