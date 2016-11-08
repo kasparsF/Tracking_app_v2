@@ -16,7 +16,7 @@ import com.example.kasparsfisers.loginapp.activities.SliderActivity;
 import com.example.kasparsfisers.loginapp.utils.Functions;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 
-public class RegisterFragment extends DialogFragment {
+public class RegistrationFragment extends DialogFragment {
     EditText username, name, email, password, password2;
     Button btnRegister;
     String newUser, newEmail, newName, newPass, newPass2;

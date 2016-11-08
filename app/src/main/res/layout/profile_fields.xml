@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+
+        android:id="@+id/profileImg"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"/>
+
+
+
+
+    <TextView
+        android:id="@+id/profileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileImg"
+        android:layout_centerHorizontal="true"
+        android:text="Kaspars Fisers"
+        android:textSize="14dp" />
+
+
+    <TextView
+        android:id="@+id/profileEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profileName"
+        android:layout_centerHorizontal="true"
+        android:text="kasparsfisers@inbox.lv"
+        android:textSize="14dp" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@+id/profileEmail"
+    android:layout_centerHorizontal="true">
+
+    <TextView
+        android:id="@+id/profileInfo1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12"
+        android:textSize="14dp" />
+
+
+    <TextView
+        android:id="@+id/profileInfo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="32"
+        android:textSize="14dp" />
+
+</LinearLayout>
+</merge>

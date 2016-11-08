@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.kasparsfisers.loginapp.R;
-import com.example.kasparsfisers.loginapp.fragments.RegisterFragment;
+import com.example.kasparsfisers.loginapp.fragments.RegistrationFragment;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-        preferences = new SharedPreferencesUtils(this);
+        preferences = SharedPreferencesUtils.getInstance(this);
         logUser = (EditText) findViewById(R.id.loginUser);
         logPass = (EditText) findViewById(R.id.loginPass);
         login = (Button) findViewById(R.id.btnLogin);
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         // Check if user is logged in
         if(preferences.sessionLoggedIn()){
-            startActivity(new Intent(LoginActivity.this, MainScreen.class));
+            startActivity(new Intent(LoginActivity.this, MainScreenActivity.class));
             finish();
         }
     }
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     } else {
                         preferences.sessionSetLoggedIn(true);
                         preferences.sessionSetData(user+pass);
-                        startActivity(new Intent(LoginActivity.this, MainScreen.class));
+                        startActivity(new Intent(LoginActivity.this, MainScreenActivity.class));
                         finish();
                         showViews();
                     }
@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if (v.getId() == R.id.btnLoginReg) {
-            RegisterFragment alertdFragment = new RegisterFragment();
+            RegistrationFragment alertdFragment = new RegistrationFragment();
             // Show Alert DialogFragment
             alertdFragment.show(fm, "");
         }

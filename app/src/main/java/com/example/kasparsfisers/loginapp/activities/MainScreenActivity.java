@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kasparsfisers.loginapp.ProfileActivity;
 import com.example.kasparsfisers.loginapp.adapters.LocationCursorAdapter;
 import com.example.kasparsfisers.loginapp.services.LocationService;
 import com.example.kasparsfisers.loginapp.R;
@@ -34,7 +35,7 @@ import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
 import com.example.kasparsfisers.loginapp.data.LocationContract.LocationEntry;
 
-public class MainScreen extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener {
+public class MainScreenActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener {
 
     // Identifier for coordinate data loader
     private static final int COORDINATE_LOADER = 0;
@@ -98,7 +99,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(MainScreen.this, GoogleMapsActivity.class);
+                Intent intent = new Intent(MainScreenActivity.this, GoogleMapsActivity.class);
                 Uri currentCoordinatesUri = ContentUris.withAppendedId(LocationEntry.CONTENT_URI, id);
                 intent.setData(currentCoordinatesUri);
                 startActivity(intent);
@@ -177,7 +178,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
 
     // Asking for location permissions
     private void askPermissions() {
-        ActivityCompat.requestPermissions(MainScreen.this,
+        ActivityCompat.requestPermissions(MainScreenActivity.this,
                 new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                 1);
     }
@@ -217,12 +218,12 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
 
         if (id == R.id.nav_slider) {
 
-            startActivity(new Intent(MainScreen.this, SliderActivity.class));
+            startActivity(new Intent(MainScreenActivity.this, SliderActivity.class));
         } else if (id == R.id.nav_logout) {
 
             preferences.sessionSetLoggedIn(false);
             preferences.sessionSetData("");
-            startActivity(new Intent(MainScreen.this, LoginActivity.class));
+            startActivity(new Intent(MainScreenActivity.this, LoginActivity.class));
             finish();
 
         } else if (id == R.id.nav_track) {
@@ -244,7 +245,7 @@ public class MainScreen extends AppCompatActivity implements LoaderManager.Loade
 
         }else if (id == R.id.nav_user_profile) {
 
-            Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainScreenActivity.this, ProfileActivity.class));
 
         }
 

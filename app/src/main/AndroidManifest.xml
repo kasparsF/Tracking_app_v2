@@ -47,9 +47,12 @@
             android:name=".activities.GoogleMapsActivity"
             android:label="@string/title_activity_google_maps" />
         <activity
-            android:name=".activities.MainScreen"
+            android:name=".activities.MainScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".GalleryActivity">
 
+        </activity>
     </application>
 
 </manifest>

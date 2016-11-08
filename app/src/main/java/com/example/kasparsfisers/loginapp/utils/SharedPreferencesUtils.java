@@ -43,6 +43,14 @@ public class SharedPreferencesUtils {
         return prefs.getString(data + "email", "");
     }
 
+    public void setLoginImage(String data, String value) {
+        editor.putString(data+"image", value);
+        editor.apply();
+    }
+
+    public String loginImage(String data) {
+        return prefs.getString(data+"image","");
+    }
 
     public void sessionSetLoggedIn(Boolean logged) {
         editor.putBoolean("session",logged);

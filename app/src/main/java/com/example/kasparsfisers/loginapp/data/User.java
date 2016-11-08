@@ -1,8 +1,37 @@
 package com.example.kasparsfisers.loginapp.data;
 
-/**
- * Created by kaspars.fisers on 11/7/2016.
- */
 
 public class User {
+
+    private String name;
+    private String email;
+    private String ImgId;
+
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+
+    public User(String name, String email, String image) {
+        this.name = name;
+        this.email = email;
+        this.ImgId = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getImageId() {
+        return ImgId;
+    }
+
+    public boolean hasImage() {
+        return ImgId != "";
+    }
 }
