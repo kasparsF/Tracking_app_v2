@@ -31,6 +31,10 @@ public class User {
         return ImgId;
     }
 
+    public void setImageId(String id) {
+       ImgId = id;
+    }
+
     public boolean hasImage() {
         return ImgId != "";
     }

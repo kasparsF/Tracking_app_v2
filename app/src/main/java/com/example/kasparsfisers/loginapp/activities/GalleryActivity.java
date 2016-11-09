@@ -1,7 +1,6 @@
-package com.example.kasparsfisers.loginapp;
+package com.example.kasparsfisers.loginapp.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +12,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class GalleryActivity extends AppCompatActivity {

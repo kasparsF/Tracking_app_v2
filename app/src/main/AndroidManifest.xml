@@ -49,8 +49,8 @@
         <activity
             android:name=".activities.MainScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".GalleryActivity">
+        <activity android:name=".activities.ProfileActivity" />
+        <activity android:name=".activities.GalleryActivity">
 
         </activity>
     </application>

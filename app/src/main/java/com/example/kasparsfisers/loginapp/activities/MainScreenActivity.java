@@ -27,7 +27,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kasparsfisers.loginapp.ProfileActivity;
 import com.example.kasparsfisers.loginapp.adapters.LocationCursorAdapter;
 import com.example.kasparsfisers.loginapp.services.LocationService;
 import com.example.kasparsfisers.loginapp.R;
@@ -43,7 +42,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     LocationCursorAdapter mCursorAdapter;
     DrawerLayout drawer;
     SharedPreferencesUtils preferences;
-
+    private int cursorRows=0;
     TextView headerUser;
     TextView headerEmail;
     private Uri mCurrentUri;
@@ -131,6 +130,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Update cursor containing updated coordinate data
+       cursorRows =  data.getCount();
         mCursorAdapter.swapCursor(data);
     }
 
@@ -245,7 +245,9 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
         }else if (id == R.id.nav_user_profile) {
 
-            startActivity(new Intent(MainScreenActivity.this, ProfileActivity.class));
+            Intent i =new Intent(MainScreenActivity.this, ProfileActivity.class);
+            i.putExtra("count",cursorRows);
+            startActivity(i);
 
         }
 

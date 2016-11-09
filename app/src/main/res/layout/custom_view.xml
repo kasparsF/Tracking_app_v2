@@ -6,12 +6,12 @@
     android:layout_height="match_parent">
 
 
-    <com.example.kasparsfisers.loginapp.ProfileView
+    <com.example.kasparsfisers.loginapp.views.ProfileView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/valSelect">
 
-    </com.example.kasparsfisers.loginapp.ProfileView>
+    </com.example.kasparsfisers.loginapp.views.ProfileView>
 
 
 

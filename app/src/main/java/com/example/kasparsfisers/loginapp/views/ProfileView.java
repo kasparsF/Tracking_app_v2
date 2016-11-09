@@ -1,4 +1,4 @@
-package com.example.kasparsfisers.loginapp;
+package com.example.kasparsfisers.loginapp.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,17 +8,21 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.kasparsfisers.loginapp.R;
+import com.example.kasparsfisers.loginapp.activities.GalleryActivity;
 import com.example.kasparsfisers.loginapp.data.User;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.kasparsfisers.loginapp.GalleryActivity.decodeToBase64;
+import static com.example.kasparsfisers.loginapp.activities.GalleryActivity.decodeToBase64;
 
 
 public class ProfileView extends RelativeLayout {
     View rootView;
     TextView profileName;
     TextView profileEmail;
+    TextView profileInfo1;
+    TextView profileInfo2;
     CircleImageView profileImg;
     Bitmap imageB;
 
@@ -42,7 +46,8 @@ public class ProfileView extends RelativeLayout {
         profileName = (TextView) rootView.findViewById(R.id.profileName);
         profileEmail = (TextView) rootView.findViewById(R.id.profileEmail);
         profileImg = (CircleImageView) rootView.findViewById(R.id.profileImg);
-
+        profileInfo1 = (TextView) rootView.findViewById(R.id.profileInfo1);
+        profileInfo2 = (TextView) rootView.findViewById(R.id.profileInfo2);
         profileImg.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,15 +68,37 @@ public class ProfileView extends RelativeLayout {
             profileEmail.setText(user.getEmail());
             profileImg.setImageBitmap(imageB);
 
+
         } else {
             profileName.setText(user.getName());
             profileEmail.setText(user.getEmail());
             profileImg.setImageResource(R.drawable.empty_user);
+
         }
 
 
     }
 
+    public void setCount1(int count){
+
+        profileInfo1.setText(""+count);
 
 
+
+    }
+    public void setCount2(int count){
+
+
+        profileInfo2.setText(""+count);
+
+
+    }
+
+    public void refresh(User user) {
+
+            imageB = decodeToBase64(user.getImageId());
+            profileImg.setImageBitmap(imageB);
+        profileImg.invalidate();
+
+    }
 }
