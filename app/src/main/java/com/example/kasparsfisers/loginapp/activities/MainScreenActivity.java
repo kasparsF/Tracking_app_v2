@@ -72,7 +72,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
         headerEmail = (TextView) header.findViewById(R.id.textViewEmail);
 
         //PreferencesUtil method getting data
-        preferences = new SharedPreferencesUtils(this);
+        preferences = SharedPreferencesUtils.getInstance(this);
         String value = preferences.sessionData();
         headerUser.setText(preferences.loginName(value));
         headerEmail.setText(preferences.loginEmail(value));

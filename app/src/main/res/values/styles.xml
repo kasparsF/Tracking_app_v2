@@ -25,8 +25,19 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+    <style name="textStyleName">
 
+        <item name="android:textColor">#bcbaba</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">38sp</item>
 
+    </style>
 
+    <style name="textStyleNumber">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">36sp</item>
+
+    </style>
 
 </resources>

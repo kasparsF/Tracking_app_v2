@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-
+    <com.example.kasparsfisers.loginapp.views.circleImgView
         android:id="@+id/profileImg"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:layout_weight="0" />
 
     <TextView
         android:id="@+id/profileName"
@@ -17,6 +18,7 @@
         android:layout_below="@+id/profileImg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:layout_weight="0"
         android:fontFamily="casual"
         android:textColor="#000000"
         android:textSize="24sp"
@@ -30,16 +32,18 @@
         android:layout_below="@+id/profileName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
+        android:layout_weight="0"
         android:fontFamily="casual"
         android:textColor="#8f8989"
         android:textSize="14sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/profileEmail"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <View
@@ -51,26 +55,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:background="@drawable/rounded_text"
             android:orientation="vertical">
 
             <TextView
+                style="@style/textStyleName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#544c4c"
-                android:text="Places"
-                android:textColor="#f93a3a"
-                android:textSize="18sp" />
+                android:text="Places" />
 
             <TextView
                 android:id="@+id/profileInfo1"
+                style="@style/textStyleNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-
-                android:text=""
-
-                android:textSize="16sp" />
+                android:text="" />
         </LinearLayout>
 
         <View
@@ -82,26 +81,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:background="@drawable/rounded_text"
             android:orientation="vertical">
 
             <TextView
+                style="@style/textStyleName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#544c4c"
-                android:text="!????!"
-                android:textColor="#f93a3a"
-                android:textSize="18sp" />
+                android:text="!????!" />
 
             <TextView
                 android:id="@+id/profileInfo2"
+                style="@style/textStyleNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-
-                android:text=""
-
-                android:textSize="16sp" />
+                android:text="" />
         </LinearLayout>
 
         <View

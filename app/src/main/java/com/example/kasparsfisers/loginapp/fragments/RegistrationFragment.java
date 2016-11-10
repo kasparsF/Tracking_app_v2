@@ -27,7 +27,7 @@ public class RegistrationFragment extends DialogFragment {
         View rootView = inflater.inflate(R.layout.dialog_frag, container, false);
 
 
-        preferences = new SharedPreferencesUtils(getActivity());
+        preferences = SharedPreferencesUtils.getInstance(getActivity());
 
 
         username = (EditText) rootView.findViewById(R.id.mUsername);

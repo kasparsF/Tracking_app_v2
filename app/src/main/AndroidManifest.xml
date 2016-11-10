@@ -49,10 +49,10 @@
         <activity
             android:name=".activities.MainScreenActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.ProfileActivity" />
-        <activity android:name=".activities.GalleryActivity">
-
-        </activity>
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".activities.GalleryActivity"></activity>
     </application>
 
 </manifest>

@@ -12,8 +12,6 @@ import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.activities.GalleryActivity;
 import com.example.kasparsfisers.loginapp.data.User;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import static com.example.kasparsfisers.loginapp.activities.GalleryActivity.decodeToBase64;
 
 
@@ -23,7 +21,7 @@ public class ProfileView extends RelativeLayout {
     TextView profileEmail;
     TextView profileInfo1;
     TextView profileInfo2;
-    CircleImageView profileImg;
+    circleImgView profileImg;
     Bitmap imageB;
 
 
@@ -45,7 +43,7 @@ public class ProfileView extends RelativeLayout {
         rootView = inflate(context, R.layout.profile_fields, this);
         profileName = (TextView) rootView.findViewById(R.id.profileName);
         profileEmail = (TextView) rootView.findViewById(R.id.profileEmail);
-        profileImg = (CircleImageView) rootView.findViewById(R.id.profileImg);
+        profileImg = (circleImgView) rootView.findViewById(R.id.profileImg);
         profileInfo1 = (TextView) rootView.findViewById(R.id.profileInfo1);
         profileInfo2 = (TextView) rootView.findViewById(R.id.profileInfo2);
         profileImg.setOnClickListener(new OnClickListener() {

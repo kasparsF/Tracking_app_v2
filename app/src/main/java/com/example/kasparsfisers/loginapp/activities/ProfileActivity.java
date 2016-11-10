@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
         val = (ProfileView) findViewById(R.id.valSelect);
 
 
-        preferences = new SharedPreferencesUtils(this);
+        preferences = SharedPreferencesUtils.getInstance(this);
         sessionData = preferences.sessionData();
         imageCode = preferences.loginImage(sessionData);
         user = new User(preferences.loginName(sessionData), preferences.loginEmail(sessionData), imageCode);
