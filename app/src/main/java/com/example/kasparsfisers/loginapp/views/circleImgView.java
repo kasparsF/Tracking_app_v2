@@ -31,7 +31,7 @@ public class circleImgView extends ImageView {
 
     private final Matrix mShaderMatrix = new Matrix();
     private final Paint mBitmapPaint = new Paint();
-    private final Paint mBorderPaint = new Paint();
+
 
 
     private Bitmap mBitmap;
@@ -45,7 +45,7 @@ public class circleImgView extends ImageView {
 
     private boolean mReady;
     private boolean mSetupPending;
-    private boolean mBorderOverlay;
+
 
     public circleImgView(Context context) {
         super(context);
@@ -109,19 +109,6 @@ public class circleImgView extends ImageView {
     }
 
 
-
-    public boolean isBorderOverlay() {
-        return mBorderOverlay;
-    }
-
-    public void setBorderOverlay(boolean borderOverlay) {
-        if (borderOverlay == mBorderOverlay) {
-            return;
-        }
-
-        mBorderOverlay = borderOverlay;
-        setup();
-    }
 
     @Override
     public void setImageBitmap(Bitmap bm) {
@@ -204,8 +191,6 @@ public class circleImgView extends ImageView {
         mBitmapPaint.setAntiAlias(true);
         mBitmapPaint.setShader(mBitmapShader);
 
-        mBorderPaint.setStyle(Paint.Style.STROKE);
-        mBorderPaint.setAntiAlias(true);
 
 
         mBitmapHeight = mBitmap.getHeight();

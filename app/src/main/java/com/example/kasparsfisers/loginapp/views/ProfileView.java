@@ -25,7 +25,6 @@ public class ProfileView extends RelativeLayout {
     Bitmap imageB;
 
 
-
     public ProfileView(Context context) {
         super(context);
         init(context);
@@ -36,7 +35,6 @@ public class ProfileView extends RelativeLayout {
         init(context);
 
     }
-
 
 
     private void init(final Context context) {
@@ -50,15 +48,15 @@ public class ProfileView extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(
-                        getContext(),GalleryActivity.class);
+                        getContext(), GalleryActivity.class);
 
-               context.startActivity(i);
+                context.startActivity(i);
             }
         });
 
     }
 
-    public void setUser(User user){
+    public void setUser(User user) {
 
         if (user.hasImage()) {
             imageB = decodeToBase64(user.getImageId());
@@ -73,30 +71,20 @@ public class ProfileView extends RelativeLayout {
             profileImg.setImageResource(R.drawable.empty_user);
 
         }
-
-
     }
 
-    public void setCount1(int count){
+    public void setCount1(int count) {
 
         profileInfo1.setText(String.format("%d", count));
-
-
-
     }
-    public void setCount2(int count){
 
-
+    public void setCount2(int count) {
         profileInfo2.setText(String.format("%d", count));
-
-
     }
 
     public void refresh(User user) {
-
-            imageB = decodeToBase64(user.getImageId());
-            profileImg.setImageBitmap(imageB);
+        imageB = decodeToBase64(user.getImageId());
+        profileImg.setImageBitmap(imageB);
         profileImg.invalidate();
-
     }
 }
