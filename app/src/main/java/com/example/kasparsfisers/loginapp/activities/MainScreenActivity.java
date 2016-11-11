@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -27,6 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kasparsfisers.loginapp.fragments.TimerSettingsFragment;
 import com.example.kasparsfisers.loginapp.adapters.LocationCursorAdapter;
 import com.example.kasparsfisers.loginapp.services.LocationService;
 import com.example.kasparsfisers.loginapp.R;
@@ -46,7 +48,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     TextView headerUser;
     TextView headerEmail;
     private Uri mCurrentUri;
-
+    FragmentManager fm = getSupportFragmentManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -249,6 +251,11 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
             i.putExtra("count",cursorRows);
             startActivity(i);
 
+        }else if (id == R.id.nav_settings) {
+
+            TimerSettingsFragment timerFrag = new TimerSettingsFragment();
+            // Show Alert DialogFragment
+            timerFrag.show(fm, "");
         }
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -20,19 +20,25 @@ import android.widget.Toast;
 import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
 import com.example.kasparsfisers.loginapp.utils.Functions;
+import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import static android.R.string.no;
+
 
 public class LocationService extends Service implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private static LocationService instance = null;
-
+    SharedPreferencesUtils preferences;
+    String sessionData;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+
+
 
     private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
 
@@ -54,6 +60,11 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     public int onStartCommand(Intent intent, int flags, int startId) {
         instance = this;
         Toast.makeText(this, R.string.serviceStart, Toast.LENGTH_SHORT).show();
+
+        preferences = SharedPreferencesUtils.getInstance(this);
+        sessionData = preferences.sessionData();
+        UPDATE_INTERVAL = Long.parseLong(preferences.timer(sessionData));
+
 
         // Create the location client to start receiving updates
         if (mGoogleApiClient == null) {

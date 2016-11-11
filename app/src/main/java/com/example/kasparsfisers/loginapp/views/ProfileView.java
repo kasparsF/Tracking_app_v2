@@ -79,7 +79,7 @@ public class ProfileView extends RelativeLayout {
 
     public void setCount1(int count){
 
-        profileInfo1.setText(""+count);
+        profileInfo1.setText(String.format("%d", count));
 
 
 
@@ -87,7 +87,7 @@ public class ProfileView extends RelativeLayout {
     public void setCount2(int count){
 
 
-        profileInfo2.setText(""+count);
+        profileInfo2.setText(String.format("%d", count));
 
 
     }

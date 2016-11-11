@@ -18,8 +18,9 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 
-public class circleImgView extends ImageView {
 
+public class circleImgView extends ImageView {
+    private static final float SCALE_MIDDLE = 0.5f;
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
@@ -217,7 +218,7 @@ public class circleImgView extends ImageView {
 
         mDrawableRadius = Math.min(mDrawableRect.height() / 2, mDrawableRect.width() / 2);
 
-       updateShaderMatrix();
+     updateShaderMatrix();
         invalidate();
     }
 
@@ -230,14 +231,14 @@ public class circleImgView extends ImageView {
 
         if (mBitmapWidth * mDrawableRect.height() > mDrawableRect.width() * mBitmapHeight) {
             scale = mDrawableRect.height() / (float) mBitmapHeight;
-            dx = (mDrawableRect.width() - mBitmapWidth * scale) * 0.5f;
+            dx = (mDrawableRect.width() - mBitmapWidth * scale) * SCALE_MIDDLE;
         } else {
             scale = mDrawableRect.width() / (float) mBitmapWidth;
-            dy = (mDrawableRect.height() - mBitmapHeight * scale) * 0.5f;
+            dy = (mDrawableRect.height() - mBitmapHeight * scale) * SCALE_MIDDLE;
         }
 
         mShaderMatrix.setScale(scale, scale);
-        mShaderMatrix.postTranslate((int) (dx + 0.5f) + mDrawableRect.left, (int) (dy + 0.5f) + mDrawableRect.top);
+        mShaderMatrix.postTranslate((int) (dx + SCALE_MIDDLE) + mDrawableRect.left, (int) (dy + SCALE_MIDDLE) + mDrawableRect.top);
 
         mBitmapShader.setLocalMatrix(mShaderMatrix);
     }

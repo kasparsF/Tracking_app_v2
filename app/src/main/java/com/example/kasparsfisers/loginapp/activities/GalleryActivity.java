@@ -27,13 +27,15 @@ import java.io.InputStream;
 import static com.google.android.gms.analytics.internal.zzy.B;
 
 public class GalleryActivity extends AppCompatActivity {
-
+    final int ASPECT_RATIO = 1;
+    final int IMG_OUTPUT = 256;
     final int PICK_IMAGE_REQUEST = 1;
     final int PIC_CROP = 2;
     RadioButton mCrop;
     SharedPreferencesUtils preferences;
     Button btnNew;
     private Uri selectedImageUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +78,6 @@ public class GalleryActivity extends AppCompatActivity {
         Toast.makeText(GalleryActivity.this, "Image saved", Toast.LENGTH_SHORT).show();
         stream = getContentResolver().openInputStream(data.getData());
         Bitmap realImage = BitmapFactory.decodeStream(stream);
-            realImage = Bitmap.createBitmap(realImage, 10, 10, realImage.getWidth() - 20, realImage.getHeight() - 20);
         String values = preferences.sessionData();
         preferences.setLoginImage(values,encodeToBase64(realImage));
         finish();
@@ -127,11 +128,11 @@ public class GalleryActivity extends AppCompatActivity {
             //set crop properties
             cropIntent.putExtra("crop", "true");
             //indicate aspect of desired crop
-            cropIntent.putExtra("aspectX", 1);
-            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("aspectX", ASPECT_RATIO);
+            cropIntent.putExtra("aspectY", ASPECT_RATIO);
             //indicate output X and Y
-            cropIntent.putExtra("outputX", 256);
-            cropIntent.putExtra("outputY", 256);
+            cropIntent.putExtra("outputX", IMG_OUTPUT);
+            cropIntent.putExtra("outputY", IMG_OUTPUT);
             //retrieve data on return
             cropIntent.putExtra("return-data", true);
             //start the activity - we handle returning in onActivityResult

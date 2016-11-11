@@ -21,10 +21,10 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_view);
         Bundle extras = getIntent().getExtras();
-        int userName = 0;
+        int placeCount = 0;
 
         if (extras != null) {
-            userName = extras.getInt("count");
+            placeCount = extras.getInt("count");
             // and get whatever type user account id is
         }
         val = (ProfileView) findViewById(R.id.valSelect);
@@ -34,9 +34,9 @@ public class ProfileActivity extends AppCompatActivity {
         sessionData = preferences.sessionData();
         imageCode = preferences.loginImage(sessionData);
         user = new User(preferences.loginName(sessionData), preferences.loginEmail(sessionData), imageCode);
-        val.setCount1(userName);
+        val.setCount1(placeCount);
         val.setUser(user);
-        val.setCount2(userName);
+        val.setCount2(8);
     }
 
     @Override

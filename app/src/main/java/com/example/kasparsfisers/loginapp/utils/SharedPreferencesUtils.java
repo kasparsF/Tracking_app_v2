@@ -43,6 +43,16 @@ public class SharedPreferencesUtils {
         return prefs.getString(data + "email", "");
     }
 
+    public void setTimer(String data, String value) {
+        editor.putString(data+"timer", value);
+        editor.apply();
+    }
+
+    public String timer(String data) {
+        return prefs.getString(data+"timer","10000");
+    }
+
+
     public void setLoginImage(String data, String value) {
         editor.putString(data+"image", value);
         editor.apply();
@@ -51,6 +61,8 @@ public class SharedPreferencesUtils {
     public String loginImage(String data) {
         return prefs.getString(data+"image","");
     }
+
+
 
     public void sessionSetLoggedIn(Boolean logged) {
         editor.putBoolean("session",logged);

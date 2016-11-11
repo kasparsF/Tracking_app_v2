@@ -11,96 +11,104 @@
         android:layout_marginTop="30dp"
         android:layout_weight="0" />
 
-    <TextView
-        android:id="@+id/profileName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profileImg"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0"
-        android:fontFamily="casual"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+    <!--<ImageView-->
+    <!--android:id="@+id/profileImg"-->
+    <!--android:layout_width="250dp"-->
+    <!--android:layout_height="250dp"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:layout_weight="0"/>-->
+
+<TextView
+    android:id="@+id/profileName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/profileImg"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="10dp"
+    android:layout_weight="0"
+    android:fontFamily="casual"
+    android:textColor="#000000"
+    android:textSize="24sp"
+    android:textStyle="bold" />
 
 
-    <TextView
-        android:id="@+id/profileEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profileName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:layout_weight="0"
-        android:fontFamily="casual"
-        android:textColor="#8f8989"
-        android:textSize="14sp" />
+<TextView
+    android:id="@+id/profileEmail"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/profileName"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="5dp"
+    android:layout_weight="0"
+    android:fontFamily="casual"
+    android:textColor="#8f8989"
+    android:textSize="14sp" />
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/profileEmail"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="20dp"
+    android:layout_weight="1"
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_weight="1" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/profileEmail"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:background="@drawable/rounded_text"
+        android:orientation="vertical">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
-            android:layout_weight="1" />
-
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            style="@style/textStyleName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:background="@drawable/rounded_text"
-            android:orientation="vertical">
+            android:text="Places" />
 
-            <TextView
-                style="@style/textStyleName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Places" />
-
-            <TextView
-                android:id="@+id/profileInfo1"
-                style="@style/textStyleNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
-            android:layout_weight="1" />
-
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/profileInfo1"
+            style="@style/textStyleNumber"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:background="@drawable/rounded_text"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/textStyleName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="!????!" />
-
-            <TextView
-                android:id="@+id/profileInfo2"
-                style="@style/textStyleNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="10dp"
-            android:layout_weight="1" />
+            android:text="" />
     </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:background="@drawable/rounded_text"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/textStyleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="!????!" />
+
+        <TextView
+            android:id="@+id/profileInfo2"
+            style="@style/textStyleNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_weight="1" />
+</LinearLayout>
 </merge>
