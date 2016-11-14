@@ -35,16 +35,19 @@ import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
 import com.example.kasparsfisers.loginapp.data.LocationContract.LocationEntry;
+import com.example.kasparsfisers.loginapp.views.ProgressView;
 
 public class MainScreenActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener {
 
     // Identifier for coordinate data loader
     private static final int COORDINATE_LOADER = 0;
     MenuItem itemTrack;
+    float maxRows = 10;
     LocationCursorAdapter mCursorAdapter;
     DrawerLayout drawer;
+    ProgressView progressView;
     SharedPreferencesUtils preferences;
-    private int cursorRows=0;
+    private float cursorRows=0;
     TextView headerUser;
     TextView headerEmail;
     private Uri mCurrentUri;
@@ -61,6 +64,11 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
+
+
+        //Custom view progress
+        progressView = (ProgressView)findViewById(R.id.progView);
+
 
         //Menu navigation
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -89,8 +97,8 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
         }
         // Setting up listView and adding adapter and contextMenu
         ListView coordinateListView = (ListView) findViewById(R.id.list);
-        View emptyView = findViewById(R.id.empty_view);
-        coordinateListView.setEmptyView(emptyView);
+//        View emptyView = findViewById(R.id.empty_view);
+//        coordinateListView.setEmptyView(emptyView);
         registerForContextMenu(coordinateListView);
         mCursorAdapter = new LocationCursorAdapter(this, null);
         coordinateListView.setAdapter(mCursorAdapter);
@@ -115,6 +123,8 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
+
+
         String[] projection = {
                 LocationEntry._ID,
                 LocationEntry.COLUMN_LOCNAME};
@@ -131,9 +141,22 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     // after Cursor loads
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+
+
         // Update cursor containing updated coordinate data
        cursorRows =  data.getCount();
         mCursorAdapter.swapCursor(data);
+
+           float progressCount = cursorRows / maxRows * 100;
+        progressView.setProgress(progressCount);
+        progressView.setTitle(String.format("%.1f", progressCount));
+
+
+        if (cursorRows == maxRows) {
+            stopService(new Intent(getBaseContext(), LocationService.class));
+            itemTrack.setTitle(R.string.start);
+        }
     }
 
     //Cursor reset
@@ -188,14 +211,17 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     // Location service method
     private void serviceEnable() {
 
-        if (!LocationService.isInstanceCreated()) {
+            if (!LocationService.isInstanceCreated() && cursorRows < maxRows) {
 
-            startService(new Intent(getBaseContext(), LocationService.class));
-            itemTrack.setTitle(R.string.stop);
+                startService(new Intent(getBaseContext(), LocationService.class));
+                itemTrack.setTitle(R.string.stop);
 
-        } else {
-            stopService(new Intent(getBaseContext(), LocationService.class));
-            itemTrack.setTitle(R.string.start);
+            } else {
+                stopService(new Intent(getBaseContext(), LocationService.class));
+                itemTrack.setTitle(R.string.start);
+            }
+        if(cursorRows >= maxRows){
+            Toast.makeText(this, "Memory Full", Toast.LENGTH_SHORT).show();
         }
 
     }

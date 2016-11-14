@@ -19,7 +19,7 @@ import android.widget.ImageView;
 
 
 
-public class circleImgView extends ImageView {
+public class CircleImgView extends ImageView {
     private static final float SCALE_MIDDLE = 0.5f;
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
@@ -47,17 +47,17 @@ public class circleImgView extends ImageView {
     private boolean mSetupPending;
 
 
-    public circleImgView(Context context) {
+    public CircleImgView(Context context) {
         super(context);
 
         init();
     }
 
-    public circleImgView(Context context, AttributeSet attrs) {
+    public CircleImgView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public circleImgView(Context context, AttributeSet attrs, int defStyle) {
+    public CircleImgView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         init();

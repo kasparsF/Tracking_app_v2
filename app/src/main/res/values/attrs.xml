@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<declare-styleable name="ProfileView">
-    <attr name="imageCircle" format="boolean" />
-</declare-styleable>
+    <declare-styleable name="ProgressView">
+        <attr name="radius" format="integer"/>
+        <attr name="MiddleTextSize" format="integer"/>
+        <attr name="TextSize" format="integer"/>
+        <attr name="ColorOfCircle" format="string"/>
+        <attr name="ColorOfProgress" format="string"/>
+        <attr name="MiddleTextColor" format="string"/>
+        <attr name="TextColor" format="string"/>
+        <attr name="StrokeSize" format="string"/>
+    </declare-styleable>
 </resources>

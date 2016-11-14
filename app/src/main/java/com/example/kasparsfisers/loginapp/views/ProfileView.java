@@ -21,7 +21,7 @@ public class ProfileView extends RelativeLayout {
     TextView profileEmail;
     TextView profileInfo1;
     TextView profileInfo2;
-    circleImgView profileImg;
+    CircleImgView profileImg;
     Bitmap imageB;
 
 
@@ -41,7 +41,7 @@ public class ProfileView extends RelativeLayout {
         rootView = inflate(context, R.layout.profile_fields, this);
         profileName = (TextView) rootView.findViewById(R.id.profileName);
         profileEmail = (TextView) rootView.findViewById(R.id.profileEmail);
-        profileImg = (circleImgView) rootView.findViewById(R.id.profileImg);
+        profileImg = (CircleImgView) rootView.findViewById(R.id.profileImg);
         profileInfo1 = (TextView) rootView.findViewById(R.id.profileInfo1);
         profileInfo2 = (TextView) rootView.findViewById(R.id.profileInfo2);
         profileImg.setOnClickListener(new OnClickListener() {

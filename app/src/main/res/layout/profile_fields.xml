@@ -3,21 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <com.example.kasparsfisers.loginapp.views.circleImgView
+    <com.example.kasparsfisers.loginapp.views.CircleImgView
         android:id="@+id/profileImg"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_weight="0" />
-
-    <!--<ImageView-->
-    <!--android:id="@+id/profileImg"-->
-    <!--android:layout_width="250dp"-->
-    <!--android:layout_height="250dp"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_marginTop="30dp"-->
-    <!--android:layout_weight="0"/>-->
 
 <TextView
     android:id="@+id/profileName"
