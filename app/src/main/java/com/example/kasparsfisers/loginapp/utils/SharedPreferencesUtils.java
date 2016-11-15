@@ -43,8 +43,8 @@ public class SharedPreferencesUtils {
         return prefs.getString(data + "email", "");
     }
 
-    public void setTimer(String data, String value) {
-        editor.putString(data+"timer", value);
+    public void setTimer(String value) {
+        editor.putString("timer", value);
         editor.apply();
     }
 
@@ -81,5 +81,61 @@ public class SharedPreferencesUtils {
 
     public String sessionData() {
         return prefs.getString("sessionData","");
+    }
+
+    public void setMaxLoc(int size) {
+        editor.putInt("maxLoc",size);
+        editor.apply();
+    }
+
+    public int getMaxLoc() {
+        return prefs.getInt("maxLoc", 10);
+    }
+
+    //For custom attributes
+
+    public void setColorOfCircle(String color) {
+        editor.putString("colorCircle",color);
+        editor.apply();
+    }
+
+    public String getColorOfCircle() {
+        return prefs.getString("colorCircle","#787878");
+    }
+
+    public void setColorOfProgress(String color) {
+        editor.putString("colorProgress",color);
+        editor.apply();
+    }
+
+    public String getColorOfProgress() {
+        return prefs.getString("colorProgress","#bada55");
+    }
+
+    public void setTitleSize(int size) {
+        editor.putInt("titleSize",size);
+        editor.apply();
+    }
+
+    public int getTitleSize() {
+        return prefs.getInt("titleSize", 60);
+    }
+
+    public void setMaxTxtSize(int size) {
+        editor.putInt("maxSize",size);
+        editor.apply();
+    }
+
+    public int getMaxTxtSize() {
+        return prefs.getInt("maxSize",60);
+    }
+
+    public void setTextColor(String color) {
+        editor.putString("textColor",color);
+        editor.apply();
+    }
+
+    public String getTextColor() {
+        return prefs.getString("textColor","#a91111");
     }
 }

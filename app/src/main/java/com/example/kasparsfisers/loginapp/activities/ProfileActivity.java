@@ -21,10 +21,10 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_view);
         Bundle extras = getIntent().getExtras();
-        int placeCount = 0;
+        int placeCount = 2;
 
         if (extras != null) {
-            placeCount = extras.getInt("count");
+            placeCount =  (int)extras.getFloat("count");
             // and get whatever type user account id is
         }
         val = (ProfileView) findViewById(R.id.valSelect);

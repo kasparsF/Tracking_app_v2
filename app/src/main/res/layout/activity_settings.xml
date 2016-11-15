@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.kasparsfisers.loginapp.activities.SettingsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Percent Text Size" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/rGroup1"
+            android:weightSum="3">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="small"
+                android:id="@+id/percentSmall"
+                android:layout_weight="1"
+                />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="medium"
+                android:id="@+id/percentMedium"
+                android:layout_weight="1"
+                />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="large"
+                android:id="@+id/percentLarge"
+                android:layout_weight="1"
+                />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maximum number Text Size" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/rGroup2"
+            android:weightSum="3">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="small"
+                android:id="@+id/maxSmall"
+                android:layout_weight="1"
+                />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="medium"
+                android:id="@+id/maxMedium"
+                android:layout_weight="1"
+                />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="large"
+                android:id="@+id/maxLarge"
+                android:layout_weight="1"
+                />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Color of Circle" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/rGroup3"
+            android:weightSum="3">
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="black"
+                android:id="@+id/circleBlack"
+                android:layout_weight="1"
+                />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="red"
+                android:id="@+id/circleRed"
+                android:layout_weight="1"
+                />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="grey"
+                android:id="@+id/circleGrey"
+                android:layout_weight="1"
+                />
+        </RadioGroup>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Color of Progress bar" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/rGroup4"
+            android:weightSum="3">
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="green"
+            android:id="@+id/progGreen"
+            android:layout_weight="1"
+            />
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="red"
+            android:id="@+id/progRed"
+            android:layout_weight="1"
+            />
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="yellow"
+            android:id="@+id/progYellow"
+            android:layout_weight="1"
+            />
+    </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text Color" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/rGroup5"
+            android:weightSum="3">
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="black"
+                android:id="@+id/textBlack"
+                android:layout_weight="1"
+                />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="red"
+                android:id="@+id/textRed"
+                android:layout_weight="1"
+                />
+
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="grey"
+                android:id="@+id/textGrey"
+                android:layout_weight="1"
+                />
+        </RadioGroup>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Tracking time in sec"
+            android:ems="10"
+            android:id="@+id/timeForTracking"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Max locations"
+            android:ems="10"
+            android:id="@+id/maxLocations"
+             />
+
+        <Button
+            android:text="Accept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/accept" />
+    </LinearLayout>
+</ScrollView>

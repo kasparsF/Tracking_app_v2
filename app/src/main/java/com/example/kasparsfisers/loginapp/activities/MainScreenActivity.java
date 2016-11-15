@@ -28,7 +28,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kasparsfisers.loginapp.fragments.TimerSettingsFragment;
 import com.example.kasparsfisers.loginapp.adapters.LocationCursorAdapter;
 import com.example.kasparsfisers.loginapp.services.LocationService;
 import com.example.kasparsfisers.loginapp.R;
@@ -47,7 +46,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     DrawerLayout drawer;
     ProgressView progressView;
     SharedPreferencesUtils preferences;
-    private float cursorRows=0;
+    private float cursorRows;
     TextView headerUser;
     TextView headerEmail;
     private Uri mCurrentUri;
@@ -86,7 +85,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
         String value = preferences.sessionData();
         headerUser.setText(preferences.loginName(value));
         headerEmail.setText(preferences.loginEmail(value));
-
+        maxRows = preferences.getMaxLoc();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
@@ -278,10 +277,10 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
             startActivity(i);
 
         }else if (id == R.id.nav_settings) {
-
-            TimerSettingsFragment timerFrag = new TimerSettingsFragment();
+            startActivity(new Intent(MainScreenActivity.this, SettingsActivity.class));
+//            TimerSettingsFragment timerFrag = new TimerSettingsFragment();
             // Show Alert DialogFragment
-            timerFrag.show(fm, "");
+//            timerFrag.show(fm, "");
         }
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
