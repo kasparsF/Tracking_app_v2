@@ -34,7 +34,6 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private static LocationService instance = null;
     SharedPreferencesUtils preferences;
-    String sessionData;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
 
@@ -62,8 +61,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         Toast.makeText(this, R.string.serviceStart, Toast.LENGTH_SHORT).show();
 
         preferences = SharedPreferencesUtils.getInstance(this);
-        sessionData = preferences.sessionData();
-        UPDATE_INTERVAL = Long.parseLong(preferences.timer(sessionData));
+        UPDATE_INTERVAL = Long.parseLong(preferences.timer()) * 1000;
 
 
         // Create the location client to start receiving updates

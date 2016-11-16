@@ -50,7 +50,6 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     TextView headerUser;
     TextView headerEmail;
     private Uri mCurrentUri;
-    FragmentManager fm = getSupportFragmentManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +115,13 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
         // start loader
         getLoaderManager().initLoader(COORDINATE_LOADER, null, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    progressView.refresh();
     }
 
     //Cursor loading
@@ -278,9 +284,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
         }else if (id == R.id.nav_settings) {
             startActivity(new Intent(MainScreenActivity.this, SettingsActivity.class));
-//            TimerSettingsFragment timerFrag = new TimerSettingsFragment();
-            // Show Alert DialogFragment
-//            timerFrag.show(fm, "");
+
         }
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -31,6 +31,7 @@ public class ProgressView extends View {
     private final Paint mProgressColorPaint = new Paint();
     private final Paint mBackgroundColorPaint = new Paint();
     private final Paint mTitlePaint = new Paint();
+    private final Paint mMaxPaint = new Paint();
     private int mShadowColor = Color.BLACK;
 
 
@@ -86,6 +87,9 @@ public class ProgressView extends View {
             size = a.getInt(R.styleable.ProgressView_MiddleTextSize, preferences.getTitleSize());
             setTitleSize(size);
 
+            size = a.getInt(R.styleable.ProgressView_MiddleTextSize, preferences.getMaxTxtSize());
+            setMaxTxtSize(size);
+
 
         } finally {
             a.recycle();
@@ -105,6 +109,11 @@ public class ProgressView extends View {
         mTitlePaint.setAntiAlias(true);
         mTitlePaint.setTypeface(Typeface.create("Roboto-Thin", Typeface.NORMAL));
         mTitlePaint.setShadowLayer(0.1f, 0, 1, Color.GRAY);
+
+        mMaxPaint.setStyle(Paint.Style.FILL);
+        mMaxPaint.setAntiAlias(true);
+        mMaxPaint.setTypeface(Typeface.create("Roboto-Thin", Typeface.NORMAL));
+        mMaxPaint.setShadowLayer(0.1f, 0, 1, Color.GRAY);
 
     }
 
@@ -128,7 +137,7 @@ public class ProgressView extends View {
 
 
         }
-        canvas.drawText(maxTitle, getMeasuredWidth() - mTitlePaint.measureText(maxTitle), 100, mTitlePaint);
+        canvas.drawText(maxTitle, getMeasuredWidth() - mMaxPaint.measureText(maxTitle), 100, mMaxPaint);
     }
 
 
@@ -137,7 +146,7 @@ public class ProgressView extends View {
         final int height = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
         final int width = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
         final int min = Math.min(width, height);
-        setMeasuredDimension(min + 2 * STROKE_WIDTH + (int) mTitlePaint.measureText(maxTitle), min + 2 * STROKE_WIDTH);
+        setMeasuredDimension(min + 2 * STROKE_WIDTH + (int) mMaxPaint.measureText(maxTitle), min + 2 * STROKE_WIDTH);
 
         mCircleBounds.set(STROKE_WIDTH, STROKE_WIDTH, min + STROKE_WIDTH, min + STROKE_WIDTH);
     }
@@ -161,11 +170,12 @@ public class ProgressView extends View {
 
     public  void setTitleColor(String color) {
         mTitlePaint.setColor(Color.parseColor(color));
+        mMaxPaint.setColor(Color.parseColor(color));
         invalidate();
     }
 
     public void setMaxTxtSize(int size) {
-        mTitlePaint.setColor(size);
+        mMaxPaint.setTextSize(size);
         invalidate();
     }
 
@@ -181,6 +191,10 @@ public class ProgressView extends View {
 
     public synchronized void setTitle(String title) {
         this.mTitle = title + "%";
+        invalidate();
+    }
+
+    public void refresh() {
         invalidate();
     }
 }

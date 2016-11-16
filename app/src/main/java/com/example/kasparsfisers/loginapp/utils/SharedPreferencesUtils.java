@@ -48,8 +48,8 @@ public class SharedPreferencesUtils {
         editor.apply();
     }
 
-    public String timer(String data) {
-        return prefs.getString(data+"timer","10000");
+    public String timer() {
+        return prefs.getString("timer","10");
     }
 
 
@@ -138,4 +138,47 @@ public class SharedPreferencesUtils {
     public String getTextColor() {
         return prefs.getString("textColor","#a91111");
     }
+
+
+
+    // Radiobutton settings
+
+    public void setRad1(int id) {
+        editor.putInt("id1",id);
+        editor.apply();
+    }
+    public void setRad2(int id) {
+        editor.putInt("id2",id);
+        editor.apply();
+    }
+    public void setRad3(int id) {
+        editor.putInt("id3",id);
+        editor.apply();
+    }
+    public void setRad4(int id) {
+        editor.putInt("id4",id);
+        editor.apply();
+    }
+    public void setRad5(int id) {
+        editor.putInt("id5",id);
+        editor.apply();
+    }
+
+    public int getRad1() {
+        return prefs.getInt("id1", 0);
+    }
+    public int getRad2() {
+        return prefs.getInt("id2", 0);
+    }
+    public int getRad3() {
+        return prefs.getInt("id3", 0);
+    }
+    public int getRad4() {
+        return prefs.getInt("id4", 0);
+    }
+    public int getRad5() {
+        return prefs.getInt("id5", 0);
+    }
+
+
 }
