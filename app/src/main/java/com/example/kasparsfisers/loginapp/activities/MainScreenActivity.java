@@ -35,6 +35,7 @@ import com.example.kasparsfisers.loginapp.adapters.LocationCursorAdapter;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
 import com.example.kasparsfisers.loginapp.data.LocationContract.LocationEntry;
 import com.example.kasparsfisers.loginapp.services.LocationService;
+import com.example.kasparsfisers.loginapp.utils.Functions;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 import com.example.kasparsfisers.loginapp.views.ProgressView;
 
@@ -125,7 +126,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     protected void onResume() {
         super.onResume();
 
-      //  progressView.refresh();
+        progressView.refresh();
     }
 
     //Cursor loading
@@ -222,7 +223,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
         if (!LocationService.isInstanceCreated() && cursorRows < maxRows) {
 
             Intent i = new Intent(getBaseContext(), LocationService.class);
-            i.putExtra("currLoc", cursorRows);
+            i.putExtra(Functions.CURRENT_LOC, cursorRows);
             startService(i);
 
             itemTrack.setTitle(R.string.stop);

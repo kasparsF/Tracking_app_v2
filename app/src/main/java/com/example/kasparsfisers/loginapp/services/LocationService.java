@@ -7,9 +7,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Geocoder;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -32,10 +30,6 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import static android.R.string.no;
-import static com.google.android.gms.analytics.internal.zzy.e;
-import static com.google.android.gms.analytics.internal.zzy.t;
-
 
 public class LocationService extends Service implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -43,20 +37,15 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
     private static LocationService instance = null;
     SharedPreferencesUtils preferences;
     private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
     int currLoc;
     NotificationCompat.Builder mBuilder;
     NotificationManager mNotifyMgr;
-
-
-    private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
+    private long UPDATE_INTERVAL;
 
     public static boolean isInstanceCreated() {
         return instance != null;
     }
 
-
-    Geocoder gcd = null;
     double lat, lon, acc;
 
     @Nullable
@@ -74,30 +63,24 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
         Bundle extras = intent.getExtras();
 
         if (extras != null) {
-            currLoc = (int) extras.getFloat("currLoc");
+            currLoc = (int) extras.getFloat(Functions.CURRENT_LOC);
         }
 
 
         //Notification intent
         Intent resultIntent = new Intent(this, MainScreenActivity.class);
-
-
         PendingIntent pIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), resultIntent, 0);
 
         //Notification builder
         mBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_menu_send)
-                        .setContentTitle("TrackingApp")
-                        .setContentText("Maximum number of locations have reached")
+                        .setContentTitle(getString(R.string.notification_name))
+                        .setContentText(getString(R.string.notification_text))
                         .setAutoCancel(true)
-                        .setVibrate(new long[] { 1000, 1000, 1000})
+                        .setVibrate(new long[]{1000, 1000, 1000})
                         .setLights(Color.RED, 2000, 3000)
                         .setContentIntent(pIntent);
-
-
-
-
 
 
         preferences = SharedPreferencesUtils.getInstance(this);
@@ -152,7 +135,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
 
     protected void startLocationUpdates() {
         // Create the location request
-        mLocationRequest = LocationRequest.create()
+        LocationRequest mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(UPDATE_INTERVAL);
         // Request location updates
@@ -196,10 +179,10 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
             switch (message.what) {
                 case 1:
                     Bundle bundle = message.getData();
-                    result = bundle.getString("address");
-                    lat = bundle.getDouble("lat");
-                    lon = bundle.getDouble("lon");
-                    acc = bundle.getDouble("acc");
+                    result = bundle.getString(Functions.ADDRESS);
+                    lat = bundle.getDouble(Functions.LATITUDE);
+                    lon = bundle.getDouble(Functions.LONGITUDE);
+                    acc = bundle.getDouble(Functions.ACCURACY);
                     break;
                 default:
                     result = null;
@@ -211,7 +194,7 @@ public class LocationService extends Service implements GoogleApiClient.Connecti
             values.put(LocationContract.LocationEntry.COLUMN_LOCNAME, result);
 
             if (currLoc < preferences.getMaxLoc()) {
-                Uri newUri = getContentResolver().insert(LocationContract.LocationEntry.CONTENT_URI, values);
+                getContentResolver().insert(LocationContract.LocationEntry.CONTENT_URI, values);
                 currLoc++;
             } else {
                 //Start notification

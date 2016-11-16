@@ -1,13 +1,11 @@
 package com.example.kasparsfisers.loginapp.activities;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
@@ -19,17 +17,26 @@ import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
     RadioGroup radioGroup1, radioGroup2, radioGroup3, radioGroup4, radioGroup5;
     Button accept;
-    String colorOfCircle = "##787878";
-    String colorOfText = "#a91111";
-    String colorOfProgress = "#bada55";
-    int sizeOfTitle = 60;
-    int sizeOfMaxText = 60;
+    String colorOfCircle;
+    String colorOfText;
+    String colorOfProgress;
+    int sizeOfTitle;
+    int sizeOfMaxText;
     SharedPreferencesUtils preferences;
 
     EditText timer;
     String newTimer;
     EditText maxLoc;
     String newMaxLoc;
+
+    private static final int SMALL = 30;
+    private static final int MEDIUM = 60;
+    private static final int LARGE = 90;
+    private static final String COLOR_BLACK = "#000000";
+    private static final String COLOR_RED = "#a91111";
+    private static final String COLOR_GREY = "#787878";
+    private static final String COLOR_GREEN = "#bada55";
+    private static final String COLOR_YELLOW = "#FFF1E61E";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         radioGroup3.check(preferences.getRad3());
         radioGroup4.check(preferences.getRad4());
         radioGroup5.check(preferences.getRad5());
-        maxLoc.setText(preferences.getMaxLoc()+"");
+        maxLoc.setText(Integer.toString(preferences.getMaxLoc()));
         timer.setText(preferences.timer());
     }
 
@@ -60,13 +67,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         switch (radioGroup1.getCheckedRadioButtonId()) {
             case R.id.percentSmall:
-                sizeOfTitle = 30;
+                sizeOfTitle = SMALL;
                 break;
             case R.id.percentMedium:
-                sizeOfTitle = 60;
+                sizeOfTitle = MEDIUM;
                 break;
             case R.id.percentLarge:
-                sizeOfTitle = 90;
+                sizeOfTitle = LARGE;
                 break;
             default:
                 return;
@@ -74,13 +81,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         switch (radioGroup2.getCheckedRadioButtonId()) {
             case R.id.maxSmall:
-                sizeOfMaxText = 30;
+                sizeOfMaxText = SMALL;
                 break;
             case R.id.maxMedium:
-                sizeOfMaxText = 60;
+                sizeOfMaxText = MEDIUM;
                 break;
             case R.id.maxLarge:
-                sizeOfMaxText = 90;
+                sizeOfMaxText = LARGE;
                 break;
             default:
                 return;
@@ -88,13 +95,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         switch (radioGroup3.getCheckedRadioButtonId()) {
             case R.id.circleBlack:
-                colorOfCircle = "#FF000000";
+                colorOfCircle = COLOR_BLACK;
                 break;
             case R.id.circleGrey:
-                colorOfCircle = "#787878";
+                colorOfCircle = COLOR_GREY;
                 break;
             case R.id.circleRed:
-                colorOfCircle = "#a91111";
+                colorOfCircle = COLOR_RED;
                 break;
             default:
                 return;
@@ -102,13 +109,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         switch (radioGroup4.getCheckedRadioButtonId()) {
             case R.id.progGreen:
-                colorOfProgress = "#bada55";
+                colorOfProgress = COLOR_GREEN;
                 break;
             case R.id.progRed:
-                colorOfProgress = "#a91111";
+                colorOfProgress = COLOR_RED;
                 break;
             case R.id.progYellow:
-                colorOfProgress = "#FFF1E61E";
+                colorOfProgress = COLOR_YELLOW;
                 break;
             default:
                 return;
@@ -116,13 +123,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         switch (radioGroup5.getCheckedRadioButtonId()) {
             case R.id.textBlack:
-                colorOfText = "#FF000000";
+                colorOfText = COLOR_BLACK;
                 break;
             case R.id.textGrey:
-                colorOfText = "#787878";
+                colorOfText = COLOR_GREY;
                 break;
             case R.id.textRed:
-                colorOfText = "#a91111";
+                colorOfText = COLOR_RED;
                 break;
             default:
                 return;
@@ -140,6 +147,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             preferences.setRad4(radioGroup4.getCheckedRadioButtonId());
             preferences.setRad5(radioGroup5.getCheckedRadioButtonId());
             newTimer = timer.getText().toString();
+
+
             if (newTimer.equals(""))
                 newTimer = null;
 

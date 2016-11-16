@@ -14,7 +14,9 @@ import com.example.kasparsfisers.loginapp.data.LocationContract.LocationEntry;
 
 public class LocationProvider extends ContentProvider {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     public static final String LOG_TAG = LocationProvider.class.getSimpleName();
 
     // code for the coordinates table */
@@ -58,7 +60,7 @@ public class LocationProvider extends ContentProvider {
             case COORDINATE_ID:
 
                 selection = LocationEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
                 cursor = database.query(LocationEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
@@ -125,7 +127,7 @@ public class LocationProvider extends ContentProvider {
             case COORDINATE_ID:
                 // Delete a single row given by the ID in the URI
                 selection = LocationEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = database.delete(LocationEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:

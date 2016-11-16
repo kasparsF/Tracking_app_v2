@@ -7,12 +7,6 @@ public class User {
     private String email;
     private String ImgId;
 
-    public User(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
-
-
     public User(String name, String email, String image) {
         this.name = name;
         this.email = email;
@@ -32,10 +26,10 @@ public class User {
     }
 
     public void setImageId(String id) {
-       ImgId = id;
+        ImgId = id;
     }
 
     public boolean hasImage() {
-        return ImgId != "";
+        return !ImgId.equals("");
     }
 }

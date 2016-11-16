@@ -21,6 +21,8 @@
     <string name="title_activity_google_maps">Map</string>
     <string name="no_permissions">Cant use tracking without location permission</string>
     <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="notification_text">Maximum number of locations have reached</string>
+    <string name="notification_name">TrackingApp</string>
 
 
 </resources>

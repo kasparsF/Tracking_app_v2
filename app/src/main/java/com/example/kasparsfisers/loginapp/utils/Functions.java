@@ -18,7 +18,11 @@ import java.util.regex.Pattern;
 public class Functions {
 
     private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,}$";
-
+    public static final String LATITUDE = "LATITUDE";
+    public static final String LONGITUDE = "LONGITUDE";
+    public static final String ACCURACY = "ACCURACY";
+    public static final String ADDRESS = "ADDRESS";
+    public static final String CURRENT_LOC = "currLoc";
 
     public static boolean isValidPassword(final String password) {
 
@@ -38,11 +42,11 @@ public class Functions {
     }
 
 
-
     public static void getAddressFromLocation(
             final double lat, final double lon, final double acc, final Context context, final Handler handler) {
         Thread thread = new Thread() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 Geocoder geocoder = new Geocoder(context, Locale.getDefault());
                 String result = null;
                 String psCode;
@@ -82,10 +86,10 @@ public class Functions {
                     if (result != null) {
                         msg.what = 1;
                         Bundle bundle = new Bundle();
-                        bundle.putDouble("lat",lat);
-                        bundle.putDouble("lon",lon);
-                        bundle.putDouble("acc",acc);
-                        bundle.putString("address", result);
+                        bundle.putDouble(LATITUDE, lat);
+                        bundle.putDouble(LONGITUDE, lon);
+                        bundle.putDouble(ACCURACY, acc);
+                        bundle.putString(ADDRESS, result);
                         msg.setData(bundle);
                     } else
                         msg.what = 0;
@@ -95,8 +99,6 @@ public class Functions {
         };
         thread.start();
     }
-
-
 
 
 }

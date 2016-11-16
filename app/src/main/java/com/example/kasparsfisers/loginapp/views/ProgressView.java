@@ -81,8 +81,8 @@ public class ProgressView extends View {
 
             color = a.getString(R.styleable.ProgressView_MiddleTextColor);
             if (color == null)
-            setTitleColor(preferences.getTextColor());
-            else{
+                setTitleColor(preferences.getTextColor());
+            else {
                 mTitlePaint.setColor(Color.parseColor(color));
                 mMaxPaint.setColor(Color.parseColor(color));
             }

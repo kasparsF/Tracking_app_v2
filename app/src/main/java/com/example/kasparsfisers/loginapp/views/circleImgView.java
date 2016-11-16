@@ -18,7 +18,6 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 
-
 public class CircleImgView extends ImageView {
     private static final float SCALE_MIDDLE = 0.5f;
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
@@ -31,8 +30,6 @@ public class CircleImgView extends ImageView {
 
     private final Matrix mShaderMatrix = new Matrix();
     private final Paint mBitmapPaint = new Paint();
-
-
 
     private Bitmap mBitmap;
     private BitmapShader mBitmapShader;
@@ -107,7 +104,6 @@ public class CircleImgView extends ImageView {
         super.onSizeChanged(w, h, oldw, oldh);
         setup();
     }
-
 
 
     @Override
@@ -192,7 +188,6 @@ public class CircleImgView extends ImageView {
         mBitmapPaint.setShader(mBitmapShader);
 
 
-
         mBitmapHeight = mBitmap.getHeight();
         mBitmapWidth = mBitmap.getWidth();
 
@@ -203,7 +198,7 @@ public class CircleImgView extends ImageView {
 
         mDrawableRadius = Math.min(mDrawableRect.height() / 2, mDrawableRect.width() / 2);
 
-     updateShaderMatrix();
+        updateShaderMatrix();
         invalidate();
     }
 

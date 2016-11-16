@@ -48,19 +48,19 @@ public class RegistrationFragment extends DialogFragment {
                 newPass = password.getText().toString();
                 newPass2 = password2.getText().toString();
 
-                if(validation(newUser,newEmail,newName,newPass,newPass2)) {
+                if (validation(newUser, newEmail, newName, newPass, newPass2)) {
 
-                        preferences.register(newUser,newPass,newEmail,newName);
+                    preferences.register(newUser, newPass, newEmail, newName);
 
                     Toast.makeText(getActivity(), R.string.registered, Toast.LENGTH_SHORT).show();
                     dismiss();
                     preferences.sessionSetLoggedIn(true);
-                    preferences.sessionSetData(newUser+newPass);
+                    preferences.sessionSetData(newUser + newPass);
                     startActivity(new Intent(getActivity(), SliderActivity.class));
                     getActivity().finish();
 
 
-                }else{
+                } else {
                     Toast.makeText(getActivity(), R.string.registerError, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -70,29 +70,29 @@ public class RegistrationFragment extends DialogFragment {
         return rootView;
     }
 
-    public boolean validation(String newUser,String newEmail,String newName,String newPass,String newPass2){
-        boolean valid =true;
+    public boolean validation(String newUser, String newEmail, String newName, String newPass, String newPass2) {
+        boolean valid = true;
 
-        if(newUser.isEmpty() || newUser.length()>32){
+        if (newUser.isEmpty() || newUser.length() > 32) {
             valid = false;
             username.setError(getString(R.string.validUsername));
         }
 
-        if(newName.isEmpty()){
+        if (newName.isEmpty()) {
             valid = false;
             name.setError(getString(R.string.validName));
         }
 
-        if(newEmail.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()){
+        if (newEmail.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()) {
             valid = false;
             email.setError(getString(R.string.validEmail));
         }
 
-        if(!Functions.isValidPassword(newPass)){
+        if (!Functions.isValidPassword(newPass)) {
             valid = false;
             password.setError(getString(R.string.validPass));
         }
-        if(!newPass2.equals(newPass)){
+        if (!newPass2.equals(newPass)) {
             valid = false;
             password2.setError(getString(R.string.matchPass));
         }
