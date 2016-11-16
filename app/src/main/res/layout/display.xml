@@ -13,17 +13,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     custom:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.kasparsfisers.loginapp.activities.MainScreenActivity"
-    tools:showIn="@layout/app_bar_drawable">z
+    tools:showIn="@layout/app_bar_drawable">
+
 
     <com.example.kasparsfisers.loginapp.views.ProgressView
         android:id="@+id/progView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        custom:ColorOfCircle="#787878"
-        custom:ColorOfProgress="#bada55"
-        custom:MiddleTextColor="#a91111"
-       />
+        android:layout_weight="1" />
+        <!--custom:ColorOfCircle="#787878"-->
+        <!--custom:ColorOfProgress="#bada55"-->
+        <!--custom:MiddleTextColor="#a91111"-->
+        <!--custom:MiddleTextSize="120"-->
+        <!--custom:TextSize="120"-->
+
 
 
     <ListView

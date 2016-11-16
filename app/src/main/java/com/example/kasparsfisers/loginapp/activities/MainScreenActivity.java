@@ -1,6 +1,8 @@
 package com.example.kasparsfisers.loginapp.activities;
 
 import android.app.LoaderManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -11,11 +13,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -28,17 +30,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kasparsfisers.loginapp.adapters.LocationCursorAdapter;
-import com.example.kasparsfisers.loginapp.services.LocationService;
 import com.example.kasparsfisers.loginapp.R;
-import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
+import com.example.kasparsfisers.loginapp.adapters.LocationCursorAdapter;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
 import com.example.kasparsfisers.loginapp.data.LocationContract.LocationEntry;
+import com.example.kasparsfisers.loginapp.services.LocationService;
+import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 import com.example.kasparsfisers.loginapp.views.ProgressView;
 
 public class MainScreenActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener {
 
-    // Identifier for coordinate data loader
     private static final int COORDINATE_LOADER = 0;
     MenuItem itemTrack;
     float maxRows = 10;
@@ -50,10 +51,13 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     TextView headerUser;
     TextView headerEmail;
     private Uri mCurrentUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawable);
+
+
         // Getting toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,7 +69,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
 
         //Custom view progress
-        progressView = (ProgressView)findViewById(R.id.progView);
+        progressView = (ProgressView) findViewById(R.id.progView);
 
 
         //Menu navigation
@@ -121,13 +125,12 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     protected void onResume() {
         super.onResume();
 
-    progressView.refresh();
+      //  progressView.refresh();
     }
 
     //Cursor loading
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
 
 
         String[] projection = {
@@ -148,20 +151,20 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
 
-
         // Update cursor containing updated coordinate data
-       cursorRows =  data.getCount();
+        cursorRows = data.getCount();
         mCursorAdapter.swapCursor(data);
 
-           float progressCount = cursorRows / maxRows * 100;
+        float progressCount = cursorRows / maxRows * 100;
         progressView.setProgress(progressCount);
         progressView.setTitle(String.format("%.1f", progressCount));
 
 
         if (cursorRows == maxRows) {
-            stopService(new Intent(getBaseContext(), LocationService.class));
             itemTrack.setTitle(R.string.start);
         }
+
+
     }
 
     //Cursor reset
@@ -216,16 +219,19 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     // Location service method
     private void serviceEnable() {
 
-            if (!LocationService.isInstanceCreated() && cursorRows < maxRows) {
+        if (!LocationService.isInstanceCreated() && cursorRows < maxRows) {
 
-                startService(new Intent(getBaseContext(), LocationService.class));
-                itemTrack.setTitle(R.string.stop);
+            Intent i = new Intent(getBaseContext(), LocationService.class);
+            i.putExtra("currLoc", cursorRows);
+            startService(i);
 
-            } else {
-                stopService(new Intent(getBaseContext(), LocationService.class));
-                itemTrack.setTitle(R.string.start);
-            }
-        if(cursorRows >= maxRows){
+            itemTrack.setTitle(R.string.stop);
+
+        } else {
+            stopService(new Intent(getBaseContext(), LocationService.class));
+            itemTrack.setTitle(R.string.start);
+        }
+        if (cursorRows >= maxRows) {
             Toast.makeText(this, "Memory Full", Toast.LENGTH_SHORT).show();
         }
 
@@ -272,17 +278,17 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
             deleteAllCoords();
 
-        }else if (id == R.id.nav_show_route) {
+        } else if (id == R.id.nav_show_route) {
 
             Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
 
-        }else if (id == R.id.nav_user_profile) {
+        } else if (id == R.id.nav_user_profile) {
 
-            Intent i =new Intent(MainScreenActivity.this, ProfileActivity.class);
-            i.putExtra("count",cursorRows);
+            Intent i = new Intent(MainScreenActivity.this, ProfileActivity.class);
+            i.putExtra("count", cursorRows);
             startActivity(i);
 
-        }else if (id == R.id.nav_settings) {
+        } else if (id == R.id.nav_settings) {
             startActivity(new Intent(MainScreenActivity.this, SettingsActivity.class));
 
         }

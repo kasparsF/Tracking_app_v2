@@ -35,8 +35,6 @@ public class ProgressView extends View {
     private int mShadowColor = Color.BLACK;
 
 
-
-
     public ProgressView(Context context) {
         super(context);
         init(null, 0, context);
@@ -53,7 +51,7 @@ public class ProgressView extends View {
 
     private void init(AttributeSet attrs, int style, Context context) {
         preferences = SharedPreferencesUtils.getInstance(context);
-        maxTitle+= preferences.getMaxLoc();
+        maxTitle += preferences.getMaxLoc();
 
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
@@ -67,28 +65,37 @@ public class ProgressView extends View {
 
             color = a.getString(R.styleable.ProgressView_ColorOfProgress);
             if (color == null)
-                mProgressColorPaint.setColor(Color.BLUE);
-            else
+
                 setColorOfProgres(preferences.getColorOfProgress());
+            else
+                mProgressColorPaint.setColor(Color.parseColor(color));
+
 
             color = a.getString(R.styleable.ProgressView_ColorOfCircle);
             if (color == null)
-                mBackgroundColorPaint.setColor(Color.BLUE);
-            else
 
-              setColorOfCircle(preferences.getColorOfCircle());
+                setColorOfCircle(preferences.getColorOfCircle());
+            else
+                mBackgroundColorPaint.setColor(Color.parseColor(color));
+
 
             color = a.getString(R.styleable.ProgressView_MiddleTextColor);
             if (color == null)
-                mTitlePaint.setColor(Color.BLUE);
-            else
-               setTitleColor(preferences.getTextColor());
+            setTitleColor(preferences.getTextColor());
+            else{
+                mTitlePaint.setColor(Color.parseColor(color));
+                mMaxPaint.setColor(Color.parseColor(color));
+            }
+
 
             size = a.getInt(R.styleable.ProgressView_MiddleTextSize, preferences.getTitleSize());
             setTitleSize(size);
 
-            size = a.getInt(R.styleable.ProgressView_MiddleTextSize, preferences.getMaxTxtSize());
+            size = a.getInt(R.styleable.ProgressView_TextSize, preferences.getMaxTxtSize());
             setMaxTxtSize(size);
+
+            size = a.getInt(R.styleable.ProgressView_StrokeSize, STROKE_WIDTH);
+            setStroke(size);
 
 
         } finally {
@@ -158,8 +165,8 @@ public class ProgressView extends View {
     }
 
     //For custom attributes
-    public void setRadius(int radius) {
-        mTitlePaint.setColor(radius);
+    public void setStroke(int width) {
+        mStrokeWidth = width;
         invalidate();
     }
 
@@ -168,7 +175,7 @@ public class ProgressView extends View {
         invalidate();
     }
 
-    public  void setTitleColor(String color) {
+    public void setTitleColor(String color) {
         mTitlePaint.setColor(Color.parseColor(color));
         mMaxPaint.setColor(Color.parseColor(color));
         invalidate();
@@ -195,6 +202,11 @@ public class ProgressView extends View {
     }
 
     public void refresh() {
+        setColorOfProgres(preferences.getColorOfProgress());
+        setColorOfCircle(preferences.getColorOfCircle());
+        setTitleColor(preferences.getTextColor());
+        setTitleSize(preferences.getTitleSize());
+        setMaxTxtSize(preferences.getMaxTxtSize());
         invalidate();
     }
 }

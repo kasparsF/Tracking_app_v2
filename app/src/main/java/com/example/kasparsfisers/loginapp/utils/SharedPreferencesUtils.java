@@ -92,6 +92,15 @@ public class SharedPreferencesUtils {
         return prefs.getInt("maxLoc", 10);
     }
 
+    public void setCurLoc(int size) {
+        editor.putInt("CurrLoc",size);
+        editor.apply();
+    }
+
+    public int getCurLoc() {
+        return prefs.getInt("CorrLoc", 0);
+    }
+
     //For custom attributes
 
     public void setColorOfCircle(String color) {
