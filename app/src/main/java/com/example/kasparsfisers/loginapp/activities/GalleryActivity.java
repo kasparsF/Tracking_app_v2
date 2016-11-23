@@ -42,8 +42,8 @@ public class GalleryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gallery);
 
         preferences = SharedPreferencesUtils.getInstance(this);
-        mCrop = (RadioButton)findViewById(R.id.radioButton);
-        btnNew = (Button)findViewById(R.id.btnNew);
+        mCrop = (RadioButton) findViewById(R.id.radioButton);
+        btnNew = (Button) findViewById(R.id.btnNew);
         btnNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +53,7 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
 
-    public void selectImage(){
+    public void selectImage() {
         Intent intent = new Intent();
 // Show only images, no videos or anything else
         intent.setType("image/*");
@@ -69,35 +69,34 @@ public class GalleryActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
 // uri
-            if( mCrop.isChecked()){
+            if (mCrop.isChecked()) {
                 selectedImageUri = data.getData();
                 performCrop();
-            }else{
+            } else {
                 InputStream stream;
-        try {
-        Toast.makeText(GalleryActivity.this, "Image saved", Toast.LENGTH_SHORT).show();
-        stream = getContentResolver().openInputStream(data.getData());
-        Bitmap realImage = BitmapFactory.decodeStream(stream);
-        String values = preferences.sessionData();
-        preferences.setLoginImage(values,encodeToBase64(realImage));
-        finish();
-        }
-        catch (FileNotFoundException e) {
+                try {
+                    Toast.makeText(GalleryActivity.this, R.string.image_saved, Toast.LENGTH_SHORT).show();
+                    stream = getContentResolver().openInputStream(data.getData());
+                    Bitmap realImage = BitmapFactory.decodeStream(stream);
+                    String values = preferences.sessionData();
+                    preferences.setLoginImage(values, encodeToBase64(realImage));
+                    finish();
+                } catch (FileNotFoundException e) {
 
-        e.printStackTrace();
-        }
+                    e.printStackTrace();
+                }
             }
 
 
-        }else if(requestCode == PIC_CROP){
+        } else if (requestCode == PIC_CROP) {
 
             //get the returned data
             Bundle extras = data.getExtras();
             //get the cropped bitmap
             Bitmap thePic = extras.getParcelable("data");
             String values = preferences.sessionData();
-            preferences.setLoginImage(values,encodeToBase64(thePic));
-            Toast.makeText(GalleryActivity.this, "Image saved", Toast.LENGTH_SHORT).show();
+            preferences.setLoginImage(values, encodeToBase64(thePic));
+            Toast.makeText(GalleryActivity.this, R.string.image_saved, Toast.LENGTH_SHORT).show();
             finish();
 
         }
@@ -119,7 +118,7 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
 
-    private void performCrop(){
+    private void performCrop() {
         try {
             //call the standard crop action intent (the user device may not support it)
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
@@ -137,8 +136,7 @@ public class GalleryActivity extends AppCompatActivity {
             cropIntent.putExtra("return-data", true);
             //start the activity - we handle returning in onActivityResult
             startActivityForResult(cropIntent, PIC_CROP);
-        }
-        catch(ActivityNotFoundException anfe){
+        } catch (ActivityNotFoundException anfe) {
             //display an error message
             String errorMessage = "Whoops - your device doesn't support the crop action!";
             Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);

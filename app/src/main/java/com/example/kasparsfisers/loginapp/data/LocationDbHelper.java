@@ -21,7 +21,8 @@ public class LocationDbHelper extends SQLiteOpenHelper {
                 + LocationEntry.COLUMN_LATITUDE + " REAL NOT NULL, "
                 + LocationEntry.COLUMN_LONGITUDE + " REAL NOT NULL, "
                 + LocationEntry.COLUMN_ACCURACY + " REAL NOT NULL, "
-                + LocationEntry.COLUMN_LOCNAME + " REAL NOT NULL);";
+                + LocationEntry.COLUMN_LOCNAME + " REAL NOT NULL, "
+                + LocationEntry.COLUMN_PICTURE_URI + " TEXT);";
 
         db.execSQL(SQL_CREATE_LOCATION_TABLE);
 

@@ -29,5 +29,6 @@ public final class LocationContract {
         public static final String COLUMN_LONGITUDE = "longitude";
         public static final String COLUMN_ACCURACY = "accuracy";
         public static final String COLUMN_LOCNAME = "name";
+        public static final String COLUMN_PICTURE_URI = "picture";
     }
 }

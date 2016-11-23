@@ -207,6 +207,7 @@ public class ProgressView extends View {
         setTitleColor(preferences.getTextColor());
         setTitleSize(preferences.getTitleSize());
         setMaxTxtSize(preferences.getMaxTxtSize());
+        maxTitle = "Max: "+ preferences.getMaxLoc();
         invalidate();
     }
 }

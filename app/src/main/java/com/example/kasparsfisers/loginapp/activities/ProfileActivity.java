@@ -3,6 +3,7 @@ package com.example.kasparsfisers.loginapp.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.kasparsfisers.loginapp.utils.Functions;
 import com.example.kasparsfisers.loginapp.views.ProfileView;
 import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.data.User;
@@ -15,16 +16,16 @@ public class ProfileActivity extends AppCompatActivity {
     String sessionData;
     String imageCode;
     User user;
-
+    int placeCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_view);
         Bundle extras = getIntent().getExtras();
-        int placeCount = 2;
+
 
         if (extras != null) {
-            placeCount =  (int)extras.getFloat("count");
+            placeCount =  (int)extras.getFloat(Functions.CURRENT_LOC);
             // and get whatever type user account id is
         }
         val = (ProfileView) findViewById(R.id.valSelect);

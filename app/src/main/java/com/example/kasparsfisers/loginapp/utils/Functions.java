@@ -23,6 +23,7 @@ public class Functions {
     public static final String ACCURACY = "ACCURACY";
     public static final String ADDRESS = "ADDRESS";
     public static final String CURRENT_LOC = "currLoc";
+    public static final String CURRENT_ID = "pictureID";
 
     public static boolean isValidPassword(final String password) {
 

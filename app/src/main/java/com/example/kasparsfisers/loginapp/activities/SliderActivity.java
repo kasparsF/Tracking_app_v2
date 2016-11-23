@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import me.relex.circleindicator.CircleIndicator;
 
 
-public class SliderActivity  extends AppCompatActivity {
+public class SliderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class SliderActivity  extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
 
-        CircleIndicator indicator = (CircleIndicator)findViewById(R.id.indicator);
+        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(viewPager);
 
     }

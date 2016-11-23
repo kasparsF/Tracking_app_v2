@@ -1,9 +1,9 @@
 package com.example.kasparsfisers.loginapp.activities;
 
+import android.Manifest;
 import android.app.LoaderManager;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -11,13 +11,14 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -39,9 +40,17 @@ import com.example.kasparsfisers.loginapp.utils.Functions;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 import com.example.kasparsfisers.loginapp.views.ProgressView;
 
+import java.io.File;
+
+import static com.example.kasparsfisers.loginapp.R.id.takePhoto;
+
 public class MainScreenActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener {
 
     private static final int COORDINATE_LOADER = 0;
+    private static final int PERMISSION_REQ_CODE = 1;
+    private static final int REQUEST_EXTERNAL_STORAGE = 2;
+    private static final int CONTENT_REQUEST=1337;
+    private File output=null;
     MenuItem itemTrack;
     float maxRows = 10;
     LocationCursorAdapter mCursorAdapter;
@@ -52,6 +61,8 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     TextView headerUser;
     TextView headerEmail;
     private Uri mCurrentUri;
+    private String mCurrentPicture;
+    private long mCurrentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +131,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
         // start loader
         getLoaderManager().initLoader(COORDINATE_LOADER, null, this);
+        verifyStoragePermissions();
     }
 
     @Override
@@ -136,7 +148,8 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
         String[] projection = {
                 LocationEntry._ID,
-                LocationEntry.COLUMN_LOCNAME};
+                LocationEntry.COLUMN_LOCNAME,
+                LocationEntry.COLUMN_PICTURE_URI};
 
         //  ContentProviders query method on a background thread
         return new CursorLoader(this,
@@ -180,7 +193,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case 1: {
+            case PERMISSION_REQ_CODE: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -214,8 +227,25 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     private void askPermissions() {
         ActivityCompat.requestPermissions(MainScreenActivity.this,
                 new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                1);
+                PERMISSION_REQ_CODE);
     }
+
+    // Asking for Storage permissions
+    public void verifyStoragePermissions() {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(MainScreenActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(MainScreenActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_EXTERNAL_STORAGE);
+        }
+    }
+
+
+
+
 
     // Location service method
     private void serviceEnable() {
@@ -281,12 +311,19 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
         } else if (id == R.id.nav_show_route) {
 
-            Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(MainScreenActivity.this, GoogleMapsActivity.class);
+
+            Uri allCoordUri = LocationEntry.CONTENT_URI;
+            intent.setData(allCoordUri);
+            startActivity(intent);
+
 
         } else if (id == R.id.nav_user_profile) {
 
             Intent i = new Intent(MainScreenActivity.this, ProfileActivity.class);
-            i.putExtra("count", cursorRows);
+            i.putExtra(Functions.CURRENT_LOC, cursorRows);
             startActivity(i);
 
         } else if (id == R.id.nav_settings) {
@@ -321,6 +358,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
             long viewID = info.id;
 
             mCurrentUri = ContentUris.withAppendedId(LocationEntry.CONTENT_URI, viewID);
+            mCurrentId = viewID;
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.menu_list, menu);
         }
@@ -329,15 +367,63 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     // getting popup menu
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        Intent i;
         switch (item.getItemId()) {
             case R.id.delete:
-                deleteCoord();
+               deleteCoord();
+                return true;
+            case takePhoto:
+                takePhoto();
+                return true;
+            case R.id.showPhoto:
+                i = new Intent(this,DisplayPlaceActivity.class);
+                i.putExtra(Functions.CURRENT_ID,mCurrentId);
+                startActivity(i);
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        if (requestCode == CONTENT_REQUEST) {
+            if (resultCode == RESULT_OK && mCurrentPicture != null) {
+              //  String uriStr = mCurrentPicture.toString();
+
+                ContentValues values = new ContentValues();
+                values.put(LocationEntry.COLUMN_PICTURE_URI, mCurrentPicture);
+
+
+                int rowsAffected = getContentResolver().update(mCurrentUri, values, null, null);
+                mCurrentPicture = null;
+                // Show a toast message depending on whether or not the update was successful.
+                if (rowsAffected == 0) {
+                    // If no rows were affected, then there was an error with the update.
+                    Toast.makeText(this, "Error with updating coords",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // Otherwise, the update was successful and we can display a toast.
+
+                    Toast.makeText(this, "Coord Updated",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }
+    }
+
+    private void takePhoto() {
+        Intent i=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File dir=
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+
+        output=new File(dir, mCurrentId+".jpeg");
+        i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
+        mCurrentPicture = output.getAbsolutePath();
+        startActivityForResult(i, CONTENT_REQUEST);
+    }
 
     // Method for deleting all data from DB
     private void deleteAllCoords() {

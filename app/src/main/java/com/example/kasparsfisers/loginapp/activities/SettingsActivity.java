@@ -11,9 +11,6 @@ import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 
 
-
-
-
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
     RadioGroup radioGroup1, radioGroup2, radioGroup3, radioGroup4, radioGroup5;
     Button accept;
@@ -154,8 +151,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
 
             newMaxLoc = maxLoc.getText().toString();
-            if (newMaxLoc.equals(""))
+            if (newMaxLoc.equals("")) {
                 newMaxLoc = "10";
+            }
 
             preferences.setTimer(newTimer);
             preferences.setMaxLoc(Integer.valueOf(newMaxLoc));

@@ -8,16 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 
 
-public  class MyPagerAdapter extends FragmentPagerAdapter {
+public class MyPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
     private ArrayList<Fragment> fragmentList;
-
-
-//    public MyPagerAdapter(Context context, FragmentManager fm) {
-//        super(fm);
-//        mContext = context;
-//    }
-
 
     public MyPagerAdapter(Context context, FragmentManager fm, ArrayList<Fragment> fragmentList) {
         super(fm);
@@ -28,19 +21,18 @@ public  class MyPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if(fragmentList == null){
-            return  null;
+        if (fragmentList == null) {
+            return null;
         }
-        if(position < fragmentList.size()){
-            return  fragmentList.get(position);
-        }
-        else {
+        if (position < fragmentList.size()) {
+            return fragmentList.get(position);
+        } else {
             return fragmentList.get(0);
         }
     }
 
-    public  void  addNewItem(Fragment f){
-        if(f !=  null) {
+    public void addNewItem(Fragment f) {
+        if (f != null) {
             this.fragmentList.add(f);
         }
         notifyDataSetChanged();
