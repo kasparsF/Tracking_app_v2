@@ -443,6 +443,14 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
             } else {
                 Toast.makeText(this, "Deleted",
                         Toast.LENGTH_SHORT).show();
+
+                File dir=
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+
+                output=new File(dir, mCurrentId+".jpeg");
+                if(output.exists()){
+                    output.delete();
+                }
             }
 
         }

@@ -18,13 +18,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import static android.R.attr.tag;
 import static com.example.kasparsfisers.loginapp.R.drawable.target;
 import static com.google.android.gms.analytics.internal.zzy.i;
 
-public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
+public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
     private static final int EXISTING_COORDINATES_LOADER = 0;
     private static final String LOCATION_SEPARATOR = ",";
     private Uri mCurrentCoordinatesUri;
@@ -59,7 +60,9 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         getLoaderManager().initLoader(EXISTING_COORDINATES_LOADER, null, this);
-        // Sets the map type to be "hybrid"
+
+        mMap.setOnMarkerClickListener(this);
+
 
     }
 
@@ -174,5 +177,11 @@ public class GoogleMapsActivity extends FragmentActivity implements OnMapReadyCa
 
         Toast.makeText(this, "meters: "+distanceInMeters, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Toast.makeText(this, "Hello!!!", Toast.LENGTH_SHORT).show();
+        return false;
     }
 }
