@@ -7,12 +7,20 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.kasparsfisers.loginapp.fragments.PlaceFragment;
 import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
+import com.example.kasparsfisers.loginapp.utils.Functions;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -21,10 +29,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import static android.R.attr.tag;
-import static com.example.kasparsfisers.loginapp.R.drawable.target;
-import static com.google.android.gms.analytics.internal.zzy.i;
-
 public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
     private static final int EXISTING_COORDINATES_LOADER = 0;
     private static final String LOCATION_SEPARATOR = ",";
@@ -32,8 +36,8 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
     private GoogleMap mMap;
     private String mapLocation;
     boolean allTable = false;
-
-    private Uri mCurrentPetUri;
+    RelativeLayout picture;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +47,23 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
+        picture = (RelativeLayout) findViewById(R.id.fragment_container);
+        picture.setVisibility(View.GONE);
         Intent intent = getIntent();
         mCurrentCoordinatesUri = intent.getData();
-        if (mCurrentCoordinatesUri.equals(LocationContract.LocationEntry.CONTENT_URI)){
+        if (mCurrentCoordinatesUri.equals(LocationContract.LocationEntry.CONTENT_URI)) {
             allTable = true;
-        }   else {
+        } else {
             allTable = false;
         }
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                picture.setVisibility(View.GONE);
+            }
+        });
     }
 
 
@@ -72,7 +83,8 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
                 LocationContract.LocationEntry._ID,
                 LocationContract.LocationEntry.COLUMN_LATITUDE,
                 LocationContract.LocationEntry.COLUMN_LONGITUDE,
-                LocationContract.LocationEntry.COLUMN_LOCNAME};
+                LocationContract.LocationEntry.COLUMN_LOCNAME,
+                LocationContract.LocationEntry.COLUMN_PICTURE_URI};
 
         return new CursorLoader(this,
                 mCurrentCoordinatesUri,
@@ -89,10 +101,9 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
         }
 
 
-        if(!allTable){
+        if (!allTable) {
             locateCoordinates(cursor);
-        }
-        else{
+        } else {
             locateAllCoordinates(cursor);
         }
 
@@ -111,9 +122,11 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             int LatColumnIndex = cursor.getColumnIndex(LocationContract.LocationEntry.COLUMN_LATITUDE);
             int LonColumnIndex = cursor.getColumnIndex(LocationContract.LocationEntry.COLUMN_LONGITUDE);
             int NameColumnIndex = cursor.getColumnIndex(LocationContract.LocationEntry.COLUMN_LOCNAME);
+            int PictureColumnIndex = cursor.getColumnIndex(LocationContract.LocationEntry.COLUMN_PICTURE_URI);
             Double myLatitude = cursor.getDouble(LatColumnIndex);
             Double myLongitude = cursor.getDouble(LonColumnIndex);
             String myPlaceName = cursor.getString(NameColumnIndex);
+            path = cursor.getString(PictureColumnIndex);
 
             if (myPlaceName.contains(LOCATION_SEPARATOR)) {
                 String[] parts = myPlaceName.split(LOCATION_SEPARATOR);
@@ -123,7 +136,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             }
 
             LatLng target = new LatLng(myLatitude, myLongitude);
-            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation));
+            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation).snippet(path));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, 13));
 
         }
@@ -139,6 +152,8 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
         int LatColumnIndex = cursor.getColumnIndex(LocationContract.LocationEntry.COLUMN_LATITUDE);
         int LonColumnIndex = cursor.getColumnIndex(LocationContract.LocationEntry.COLUMN_LONGITUDE);
         int NameColumnIndex = cursor.getColumnIndex(LocationContract.LocationEntry.COLUMN_LOCNAME);
+        int PictureColumnIndex = cursor.getColumnIndex(LocationContract.LocationEntry.COLUMN_PICTURE_URI);
+
         float distanceInMeters = 0;
 
 
@@ -146,7 +161,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             Double myLatitude = cursor.getDouble(LatColumnIndex);
             Double myLongitude = cursor.getDouble(LonColumnIndex);
             String myPlaceName = cursor.getString(NameColumnIndex);
-
+            path = cursor.getString(PictureColumnIndex);
             if (myPlaceName.contains(LOCATION_SEPARATOR)) {
                 String[] parts = myPlaceName.split(LOCATION_SEPARATOR);
                 mapLocation = parts[0];
@@ -154,7 +169,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
                 mapLocation = "Unknown";
             }
 
-            if(i == 0){
+            if (i == 0) {
                 loc1.setLatitude(myLatitude);
                 loc1.setLongitude(myLongitude);
             }
@@ -166,22 +181,41 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
 
             LatLng target = new LatLng(myLatitude, myLongitude);
 
-            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation));
+            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation).snippet(path));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, 10));
 
             cursor.moveToNext();
-            i=1;
+            i = 1;
             loc1.setLatitude(myLatitude);
             loc1.setLongitude(myLongitude);
         }
 
-        Toast.makeText(this, "meters: "+distanceInMeters, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "meters: " + distanceInMeters, Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Toast.makeText(this, "Hello!!!", Toast.LENGTH_SHORT).show();
-        return false;
+
+
+        if (!Functions.isEmpty(marker.getSnippet())) {
+            Fragment fragment = new PlaceFragment();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            Bundle bundle = new Bundle();
+            bundle.putString("message", marker.getSnippet());
+            fragment.setArguments(bundle);
+
+            fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
+            picture.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "" + marker.getTitle(), Toast.LENGTH_SHORT).show();
+        }
+
+        return true;
     }
+
+
 }
