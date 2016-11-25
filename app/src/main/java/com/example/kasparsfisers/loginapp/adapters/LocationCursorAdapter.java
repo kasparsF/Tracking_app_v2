@@ -48,19 +48,19 @@ public class LocationCursorAdapter extends CursorAdapter {
 
         holder.placeName.setText(name);
 
-        if(!Functions.isEmpty(pictureStr)) {
+        if (!Functions.isEmpty(pictureStr)) {
             ExifInterface exif = null;
             try {
                 exif = new ExifInterface(pictureStr);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            byte[] imageData=exif.getThumbnail();
-            Bitmap  thumbnail= BitmapFactory.decodeByteArray(imageData,0,imageData.length);
+            byte[] imageData = exif.getThumbnail();
+            Bitmap thumbnail = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
 
             holder.placePicture.setImageBitmap(thumbnail);
 
-        }else{
+        } else {
             holder.placePicture.setImageResource(R.drawable.ic_room_black_24dp);
         }
     }

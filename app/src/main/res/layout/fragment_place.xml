@@ -15,7 +15,7 @@
             android:id="@+id/pictureMap"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:src="@drawable/loading" />
+            android:src="@drawable/empty" />
 
     </LinearLayout>
 

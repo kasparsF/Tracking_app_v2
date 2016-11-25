@@ -50,8 +50,8 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     private static final int COORDINATE_LOADER = 0;
     private static final int PERMISSION_REQ_CODE = 1;
     private static final int REQUEST_EXTERNAL_STORAGE = 2;
-    private static final int CONTENT_REQUEST=1337;
-    private File output=null;
+    private static final int CONTENT_REQUEST = 1337;
+    private File output = null;
     MenuItem itemTrack;
     float maxRows = 10;
     LocationCursorAdapter mCursorAdapter;
@@ -64,7 +64,6 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     private Uri mCurrentUri;
     private String mCurrentPicture;
     private long mCurrentId;
-    String folder_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -246,9 +245,6 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     }
 
 
-
-
-
     // Location service method
     private void serviceEnable() {
 
@@ -313,8 +309,6 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
         } else if (id == R.id.nav_show_route) {
 
-           // Toast.makeText(this, "Not Implemented", Toast.LENGTH_SHORT).show();
-
             Intent intent = new Intent(MainScreenActivity.this, GoogleMapsActivity.class);
 
             Uri allCoordUri = LocationEntry.CONTENT_URI;
@@ -372,14 +366,14 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
         Intent i;
         switch (item.getItemId()) {
             case R.id.delete:
-               deleteCoord();
+                deleteCoord();
                 return true;
             case takePhoto:
                 takePhoto();
                 return true;
             case R.id.showPhoto:
-                i = new Intent(this,DisplayPlaceActivity.class);
-                i.putExtra(Functions.CURRENT_ID,mCurrentId);
+                i = new Intent(this, DisplayPlaceActivity.class);
+                i.putExtra(Functions.CURRENT_ID, mCurrentId);
                 startActivity(i);
                 return true;
             default:
@@ -416,20 +410,18 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
     private void takePhoto() {
 
-        folder_main = "tracking";
-
-        File f = new File( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),folder_main);
+        File f = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), Functions.FOLDER_MAIN);
         if (!f.exists()) {
             f.mkdirs();
         }
 
 
-        Intent i=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File dir=
-               Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File dir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 
 
-        output=new File(dir, folder_main+"/"+mCurrentId+".jpeg");
+        output = new File(dir, Functions.FOLDER_MAIN + "/" + mCurrentId + ".jpeg");
         i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
         mCurrentPicture = output.getAbsolutePath();
         startActivityForResult(i, CONTENT_REQUEST);
@@ -441,9 +433,8 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
         int rowsDeleted = getContentResolver().delete(LocationEntry.CONTENT_URI, null, null);
 
 
-        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),folder_main);
-        if (dir.isDirectory())
-        {
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), Functions.FOLDER_MAIN);
+        if (dir.isDirectory()) {
             String[] children = dir.list();
             for (String aChildren : children) {
                 new File(dir, aChildren).delete();
@@ -468,11 +459,11 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
                 Toast.makeText(this, "Deleted",
                         Toast.LENGTH_SHORT).show();
 
-                File dir=
+                File dir =
                         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 
-                output=new File(dir, folder_main+"/"+mCurrentId+".jpeg");
-                if(output.exists()){
+                output = new File(dir, Functions.FOLDER_MAIN + "/" + mCurrentId + ".jpeg");
+                if (output.exists()) {
                     output.delete();
                 }
             }

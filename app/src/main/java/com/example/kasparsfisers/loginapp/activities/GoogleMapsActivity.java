@@ -1,6 +1,7 @@
 package com.example.kasparsfisers.loginapp.activities;
 
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -17,9 +18,11 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.kasparsfisers.loginapp.fragments.EditFragment;
 import com.example.kasparsfisers.loginapp.fragments.PlaceFragment;
 import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
+import com.example.kasparsfisers.loginapp.fragments.RegistrationFragment;
 import com.example.kasparsfisers.loginapp.utils.Functions;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,6 +43,22 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
     RelativeLayout picture;
     private String path;
     SharedPreferencesUtils preferences;
+    FragmentManager fm = getSupportFragmentManager();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK ) {
+
+                Toast.makeText(this, "Hello From onActivityResult", Toast.LENGTH_SHORT).show();
+              //Update fields
+
+            }
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +83,36 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             @Override
             public void onClick(View view) {
                 picture.setVisibility(View.GONE);
+            }
+        });
+
+
+        FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
+        fabEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            //    EditFragment editFragment = new EditFragment();
+                // Show Alert DialogFragment
+               // editFragment.show(fm, "");
+
+
+
+                ContentValues values = new ContentValues();
+                values.put(LocationContract.LocationEntry.COLUMN_LOCNAME, "HOME");
+
+
+                int rowsAffected = getContentResolver().update(mCurrentCoordinatesUri, values, null, null);
+
+                // Show a toast message depending on whether or not the update was successful.
+                if (rowsAffected == 0) {
+                    // If no rows were affected, then there was an error with the update.
+                    Toast.makeText(GoogleMapsActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Otherwise, the update was successful and we can display a toast.
+
+                }
+
+
             }
         });
     }
