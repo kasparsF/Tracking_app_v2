@@ -33,6 +33,7 @@ public class SharedPreferencesUtils {
     private static final String COLOR_PROGRESS_DEF = "#bada55";
     private static final String TEXT_COLOR_DEF = "#000000";
     private static final int TEXT_SIZE_DEF = 60;
+    private static final String DISTANCE = "distance";
 
 
     private SharedPreferencesUtils(Context context) {
@@ -75,6 +76,15 @@ public class SharedPreferencesUtils {
 
     public String timer() {
         return prefs.getString(TIME, TIME_DEFAULT);
+    }
+
+    public void setDistance(float value) {
+        editor.putFloat(DISTANCE, value);
+        editor.apply();
+    }
+
+    public float getDistance() {
+        return prefs.getFloat(DISTANCE, 0);
     }
 
 

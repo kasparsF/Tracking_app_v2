@@ -37,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
         user = new User(preferences.loginName(sessionData), preferences.loginEmail(sessionData), imageCode);
         val.setCount1(placeCount);
         val.setUser(user);
-        val.setCount2(8);
+        val.setCount2(preferences.getDistance());
     }
 
     @Override

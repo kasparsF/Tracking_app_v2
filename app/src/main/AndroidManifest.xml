@@ -38,14 +38,16 @@
 
         <activity
             android:name=".activities.GoogleMapsActivity"
-            android:label="@string/title_activity_google_maps" />
+            android:label="@string/title_activity_google_maps"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.MainScreenActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ProfileActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activities.GalleryActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.DisplayPlaceActivity"></activity>

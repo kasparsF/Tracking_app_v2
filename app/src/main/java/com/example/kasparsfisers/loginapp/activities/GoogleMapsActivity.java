@@ -21,6 +21,7 @@ import com.example.kasparsfisers.loginapp.fragments.PlaceFragment;
 import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
 import com.example.kasparsfisers.loginapp.utils.Functions;
+import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -38,6 +39,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
     boolean allTable = false;
     RelativeLayout picture;
     private String path;
+    SharedPreferencesUtils preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,9 +191,8 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             loc1.setLatitude(myLatitude);
             loc1.setLongitude(myLongitude);
         }
-
-        Toast.makeText(this, "meters: " + distanceInMeters, Toast.LENGTH_SHORT).show();
-
+        preferences = SharedPreferencesUtils.getInstance(this);
+        preferences.setDistance(distanceInMeters);
     }
 
     @Override

@@ -43,7 +43,7 @@ public class DisplayPlaceActivity extends AppCompatActivity {
         File dir =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 
-        output = new File(dir, id + ".jpeg");
+        output = new File(dir, "tracking/"+id + ".jpeg");
 
 
         if (output.exists()) {

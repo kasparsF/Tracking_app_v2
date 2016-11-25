@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -63,6 +64,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     private Uri mCurrentUri;
     private String mCurrentPicture;
     private long mCurrentId;
+    String folder_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -390,7 +392,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
                                     Intent data) {
         if (requestCode == CONTENT_REQUEST) {
             if (resultCode == RESULT_OK && mCurrentPicture != null) {
-              //  String uriStr = mCurrentPicture.toString();
+
 
                 ContentValues values = new ContentValues();
                 values.put(LocationEntry.COLUMN_PICTURE_URI, mCurrentPicture);
@@ -406,8 +408,6 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
                 } else {
                     // Otherwise, the update was successful and we can display a toast.
 
-                    Toast.makeText(this, "Coord Updated",
-                            Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -415,19 +415,43 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     }
 
     private void takePhoto() {
+
+        folder_main = "tracking";
+
+        File f = new File( Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),folder_main);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+
+
         Intent i=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File dir=
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+               Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 
-        output=new File(dir, mCurrentId+".jpeg");
+
+        output=new File(dir, folder_main+"/"+mCurrentId+".jpeg");
         i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
         mCurrentPicture = output.getAbsolutePath();
         startActivityForResult(i, CONTENT_REQUEST);
+
     }
 
     // Method for deleting all data from DB
     private void deleteAllCoords() {
         int rowsDeleted = getContentResolver().delete(LocationEntry.CONTENT_URI, null, null);
+
+
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),folder_main);
+        if (dir.isDirectory())
+        {
+            String[] children = dir.list();
+            for (String aChildren : children) {
+                new File(dir, aChildren).delete();
+            }
+            Toast.makeText(this, "deleted all", Toast.LENGTH_SHORT).show();
+        }
+
+
         Log.v("MainScree: ", rowsDeleted + " rows deleted from database");
     }
 
@@ -447,7 +471,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
                 File dir=
                         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 
-                output=new File(dir, mCurrentId+".jpeg");
+                output=new File(dir, folder_main+"/"+mCurrentId+".jpeg");
                 if(output.exists()){
                     output.delete();
                 }
