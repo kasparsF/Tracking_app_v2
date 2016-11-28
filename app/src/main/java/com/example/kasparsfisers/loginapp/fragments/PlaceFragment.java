@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.kasparsfisers.loginapp.R;
+import com.example.kasparsfisers.loginapp.activities.GoogleMapsActivity;
 
 import java.io.File;
 
@@ -32,7 +33,7 @@ public class PlaceFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.fragment_place, container, false);
-        picturePath = getArguments().getString("message");
+        picturePath = getArguments().getString(GoogleMapsActivity.CURRENT_PLACE_NAME);
         return mView;
     }
 
@@ -71,14 +72,10 @@ public class PlaceFragment extends Fragment {
 
 
                     picture.setImageBitmap(bitmap);
-
-
                 }
             }
         });
 
 
     }
-
-
 }

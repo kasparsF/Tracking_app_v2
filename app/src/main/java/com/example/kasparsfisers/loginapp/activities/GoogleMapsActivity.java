@@ -1,7 +1,6 @@
 package com.example.kasparsfisers.loginapp.activities;
 
 import android.app.LoaderManager;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -18,11 +17,10 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.kasparsfisers.loginapp.fragments.EditFragment;
-import com.example.kasparsfisers.loginapp.fragments.PlaceFragment;
 import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.data.LocationContract;
-import com.example.kasparsfisers.loginapp.fragments.RegistrationFragment;
+import com.example.kasparsfisers.loginapp.fragments.EditFragment;
+import com.example.kasparsfisers.loginapp.fragments.PlaceFragment;
 import com.example.kasparsfisers.loginapp.utils.Functions;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,7 +33,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
     private static final int EXISTING_COORDINATES_LOADER = 0;
-    private static final String LOCATION_SEPARATOR = ",";
+    private static final String LOCATION_SEPARATOR= ",";
+
+    public static final String CURRENT_URI = "current_uri";
+    public static final String CURRENT_PLACE_NAME = "current_name";
     private Uri mCurrentCoordinatesUri;
     private GoogleMap mMap;
     private String mapLocation;
@@ -44,21 +45,9 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
     private String path;
     SharedPreferencesUtils preferences;
     FragmentManager fm = getSupportFragmentManager();
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    FloatingActionButton fabEdit;
+    FloatingActionButton fab;
 
-
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK ) {
-
-                Toast.makeText(this, "Hello From onActivityResult", Toast.LENGTH_SHORT).show();
-              //Update fields
-
-            }
-        }
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,50 +61,44 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
         picture.setVisibility(View.GONE);
         Intent intent = getIntent();
         mCurrentCoordinatesUri = intent.getData();
+
         if (mCurrentCoordinatesUri.equals(LocationContract.LocationEntry.CONTENT_URI)) {
             allTable = true;
         } else {
             allTable = false;
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 picture.setVisibility(View.GONE);
+                fab.setVisibility(View.GONE);
             }
         });
 
 
-        FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
-        fabEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            //    EditFragment editFragment = new EditFragment();
-                // Show Alert DialogFragment
-               // editFragment.show(fm, "");
 
 
+     fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
+    fabEdit.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(!allTable) {
+            EditFragment editFragment = new EditFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(CURRENT_URI, mCurrentCoordinatesUri.toString());
 
-                ContentValues values = new ContentValues();
-                values.put(LocationContract.LocationEntry.COLUMN_LOCNAME, "HOME");
-
-
-                int rowsAffected = getContentResolver().update(mCurrentCoordinatesUri, values, null, null);
-
-                // Show a toast message depending on whether or not the update was successful.
-                if (rowsAffected == 0) {
-                    // If no rows were affected, then there was an error with the update.
-                    Toast.makeText(GoogleMapsActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Otherwise, the update was successful and we can display a toast.
-
-                }
-
-
+            editFragment.setArguments(bundle);
+            editFragment.show(fm, "");
+            }else{
+                Toast.makeText(GoogleMapsActivity.this, "Cant edit in Route mode", Toast.LENGTH_SHORT).show();
             }
-        });
-    }
+        }
+    });
+}
+
 
 
     @Override
@@ -182,8 +165,10 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             if (myPlaceName.contains(LOCATION_SEPARATOR)) {
                 String[] parts = myPlaceName.split(LOCATION_SEPARATOR);
                 mapLocation = parts[0];
-            } else {
+            } else if(Functions.isEmpty(myPlaceName)) {
                 mapLocation = "Unknown";
+            } else {
+                mapLocation = myPlaceName;
             }
 
             LatLng target = new LatLng(myLatitude, myLongitude);
@@ -216,8 +201,10 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             if (myPlaceName.contains(LOCATION_SEPARATOR)) {
                 String[] parts = myPlaceName.split(LOCATION_SEPARATOR);
                 mapLocation = parts[0];
-            } else {
+            } else if(Functions.isEmpty(myPlaceName)) {
                 mapLocation = "Unknown";
+            } else {
+                mapLocation = myPlaceName;
             }
 
             if (i == 0) {
@@ -256,11 +243,12 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
             Bundle bundle = new Bundle();
-            bundle.putString("message", marker.getSnippet());
+            bundle.putString(CURRENT_PLACE_NAME, marker.getSnippet());
             fragment.setArguments(bundle);
 
             fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
             picture.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.VISIBLE);
             Toast.makeText(this, "" + marker.getTitle(), Toast.LENGTH_SHORT).show();
         }
 
