@@ -20,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.custom_view);
+        setContentView(R.layout.profile_custom_view);
         Bundle extras = getIntent().getExtras();
 
 

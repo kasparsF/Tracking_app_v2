@@ -137,7 +137,7 @@ public class GalleryActivity extends AppCompatActivity {
             //start the activity - we handle returning in onActivityResult
             startActivityForResult(cropIntent, PIC_CROP);
         } catch (ActivityNotFoundException anfe) {
-            //display an error message
+            //activity_main_display an error message
             String errorMessage = "Whoops - your device doesn't support the crop action!";
             Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
             toast.show();

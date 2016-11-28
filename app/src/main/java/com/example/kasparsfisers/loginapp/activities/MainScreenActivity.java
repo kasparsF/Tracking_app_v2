@@ -400,7 +400,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
                     Toast.makeText(this, "Error with updating coords",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    // Otherwise, the update was successful and we can display a toast.
+                    // Otherwise, the update was successful and we can activity_main_display a toast.
 
                 }
 

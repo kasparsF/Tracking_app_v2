@@ -38,7 +38,7 @@ public class ProfileView extends RelativeLayout {
 
 
     private void init(final Context context) {
-        rootView = inflate(context, R.layout.profile_fields, this);
+        rootView = inflate(context, R.layout.profile_custom_view_fields, this);
         profileName = (TextView) rootView.findViewById(R.id.profileName);
         profileEmail = (TextView) rootView.findViewById(R.id.profileEmail);
         profileImg = (CircleImgView) rootView.findViewById(R.id.profileImg);

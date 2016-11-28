@@ -24,7 +24,7 @@ public class RegistrationFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.dialog_frag, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_dialog_register, container, false);
 
 
         preferences = SharedPreferencesUtils.getInstance(getActivity());

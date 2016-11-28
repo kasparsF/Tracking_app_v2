@@ -23,7 +23,7 @@ public class SliderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        // Set the content of the activity to use the login_activity.xmll layout file
+        // Set the content of the activity to use the activity_login.xmll layout file
         setContentView(R.layout.activity_slide);
 
         // Find the view pager that will allow the user to swipe between fragments
