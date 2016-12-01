@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor> {
+public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor>, GoogleMap.InfoWindowAdapter {
     private static final int EXISTING_COORDINATES_LOADER = 0;
     private static final String LOCATION_SEPARATOR= ",";
 
@@ -107,7 +108,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
         getLoaderManager().initLoader(EXISTING_COORDINATES_LOADER, null, this);
 
         mMap.setOnMarkerClickListener(this);
-
+        mMap.setInfoWindowAdapter(this);
 
     }
 
@@ -160,7 +161,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             Double myLatitude = cursor.getDouble(LatColumnIndex);
             Double myLongitude = cursor.getDouble(LonColumnIndex);
             String myPlaceName = cursor.getString(NameColumnIndex);
-            path = cursor.getString(PictureColumnIndex);
+          //  path = cursor.getString(PictureColumnIndex);
 
             if (myPlaceName.contains(LOCATION_SEPARATOR)) {
                 String[] parts = myPlaceName.split(LOCATION_SEPARATOR);
@@ -172,7 +173,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             }
 
             LatLng target = new LatLng(myLatitude, myLongitude);
-            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation).snippet(path));
+            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, 13));
 
         }
@@ -219,7 +220,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
 
             LatLng target = new LatLng(myLatitude, myLongitude);
 
-            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation).snippet(path));
+            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, 10));
 
             cursor.moveToNext();
@@ -234,26 +235,36 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
     @Override
     public boolean onMarkerClick(Marker marker) {
 
+//
+//        if (!Functions.isEmpty(marker.getSnippet())) {
+//            Fragment fragment = new PlaceFragment();
+//
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//            Bundle bundle = new Bundle();
+//            bundle.putString(CURRENT_PLACE_NAME, marker.getSnippet());
+//            fragment.setArguments(bundle);
+//
+//            fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
+//            picture.setVisibility(View.VISIBLE);
+//            fab.setVisibility(View.VISIBLE);
+//            Toast.makeText(this, "" + marker.getTitle(), Toast.LENGTH_SHORT).show();
+//        }
 
-        if (!Functions.isEmpty(marker.getSnippet())) {
-            Fragment fragment = new PlaceFragment();
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-            Bundle bundle = new Bundle();
-            bundle.putString(CURRENT_PLACE_NAME, marker.getSnippet());
-            fragment.setArguments(bundle);
-
-            fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
-            picture.setVisibility(View.VISIBLE);
-            fab.setVisibility(View.VISIBLE);
-            Toast.makeText(this, "" + marker.getTitle(), Toast.LENGTH_SHORT).show();
-        }
-
-        return true;
+        return false;
     }
 
 
+    @Override
+    public View getInfoWindow(Marker marker) {
+        return null;
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        View view = LayoutInflater.from(this).inflate(R.layout.info_window, null, false);
+        return view;
+    }
 }
