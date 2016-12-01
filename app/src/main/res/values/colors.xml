@@ -3,7 +3,14 @@
     <color name="colorPrimary">#181717</color>
     <color name="image">#00ffffff</color>
     <color name="colorPrimaryDark">#181717</color>
-    <color name="colorAccent">#cf2126</color>
     <color name="locationName">#000000</color>
     <color name="buttons">#413c3c</color>
+    <color name="colorAccent">#E65100</color>
+    <color name="bloody">#be0000</color>
+    <color name="grey">#3f3f3e</color>
+    <color name="greyDark">#3f3f3e</color>
+    <color name="primary">#EF6C00</color>
+    <color name="primaryDark">#E65100</color>
+    <color name="main_background">#cacaca</color>
+    <color name="black">#000000</color>
 </resources>

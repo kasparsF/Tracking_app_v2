@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
+    <group android:id="@+id/group1">
     <item
         android:id="@+id/nav_track"
-        android:icon="@drawable/ic_menu_send"
-        android:title="Start Tracking" />
-
+        android:icon="@drawable/gps_fixed_white_72x72"
+        android:title="Start Tracking"
+        />
+    </group>
+    <group android:id="@+id/group2">
     <item
         android:id="@+id/nav_show_route"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/directions_white_72x72"
         android:title="Show Route" />
-
+    </group>
+    <group android:id="@+id/group3">
     <item
         android:id="@+id/nav_user_profile"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/perm_identity_white_72x72"
         android:title="User Profile" />
-
+    </group>
+    <group android:id="@+id/group4">
     <item
         android:id="@+id/nav_slider"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/view_carousel_white_72x72"
         android:title="Slider" />
-
+    </group>
+    <group android:id="@+id/group5">
     <item
         android:id="@+id/nav_settings"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/settings_white_72x72"
         android:title="Settings" />
-
-
+    </group>
+    <group android:id="@+id/group6">
     <item
         android:id="@+id/nav_delete_all"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/delete_forever_white_72x72"
         android:title="Delete All Data" />
-
+    </group>
+    <group android:id="@+id/group7">
     <item
         android:id="@+id/nav_logout"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/exit_to_app_white_72x72"
         android:title="Logout" />
-
+    </group>
 
 </menu>

@@ -30,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private static final int MEDIUM = 60;
     private static final int LARGE = 90;
     private static final String COLOR_BLACK = "#000000";
-    private static final String COLOR_RED = "#a91111";
+    private static final String COLOR_ORANGE = "#EF6C00";
     private static final String COLOR_GREY = "#787878";
     private static final String COLOR_GREEN = "#bada55";
     private static final String COLOR_YELLOW = "#FFF1E61E";
@@ -98,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 colorOfCircle = COLOR_GREY;
                 break;
             case R.id.circleRed:
-                colorOfCircle = COLOR_RED;
+                colorOfCircle = COLOR_ORANGE;
                 break;
             default:
                 return;
@@ -109,7 +109,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 colorOfProgress = COLOR_GREEN;
                 break;
             case R.id.progRed:
-                colorOfProgress = COLOR_RED;
+                colorOfProgress = COLOR_ORANGE;
                 break;
             case R.id.progYellow:
                 colorOfProgress = COLOR_YELLOW;
@@ -126,7 +126,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 colorOfText = COLOR_GREY;
                 break;
             case R.id.textRed:
-                colorOfText = COLOR_RED;
+                colorOfText = COLOR_ORANGE;
                 break;
             default:
                 return;

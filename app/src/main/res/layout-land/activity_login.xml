@@ -23,8 +23,8 @@
         android:ems="10"
         android:id="@+id/loginUser"
         android:hint="Username"
-        android:textColor="#cf2126"
-        android:textColorHint="#cf2126"
+        android:textColor="@color/primaryDark"
+        android:textColorHint="@color/primaryDark"
         android:textAlignment="center" />
 
     <EditText
@@ -34,8 +34,8 @@
         android:ems="10"
         android:id="@+id/loginPass"
         android:hint="Password"
-        android:textColor="#cf2126"
-        android:textColorHint="#cf2126"
+        android:textColor="@color/primaryDark"
+        android:textColorHint="@color/primaryDark"
         android:textAlignment="center" />
 
         <Button
