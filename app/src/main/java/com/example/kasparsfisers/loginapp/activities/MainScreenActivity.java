@@ -329,7 +329,10 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
         } else if (id == R.id.nav_video) {
             startActivity(new Intent(MainScreenActivity.this, VideoActivity.class));
-            Toast.makeText(this, "Playing video from assets", Toast.LENGTH_SHORT).show();
+
+        }else if (id == R.id.nav_video2) {
+            startActivity(new Intent(MainScreenActivity.this, VideoActivity2.class));
+
         }
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
