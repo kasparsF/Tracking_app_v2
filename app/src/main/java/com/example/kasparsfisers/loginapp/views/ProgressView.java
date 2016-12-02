@@ -18,7 +18,7 @@ import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 
 public class ProgressView extends View {
 
-    private static final int STROKE_WIDTH = 30;
+    private static final int STROKE_WIDTH = 40;
 
     private String mTitle = "";
     private String maxTitle = "Max: ";
@@ -144,7 +144,10 @@ public class ProgressView extends View {
 
 
         }
-        canvas.drawText(maxTitle, getMeasuredWidth() - mMaxPaint.measureText(maxTitle), 100, mMaxPaint);
+        int xPos = (int) (getMeasuredHeight() / 2 - mMaxPaint.measureText(maxTitle) / 2);
+        int yPos = (int) (getMeasuredHeight() / 2 + mMaxPaint.getTextSize() );
+    //    canvas.drawText(maxTitle, getMeasuredWidth() - mMaxPaint.measureText(maxTitle), 100, mMaxPaint);
+        canvas.drawText(maxTitle, xPos, yPos, mMaxPaint);
     }
 
 
@@ -153,7 +156,8 @@ public class ProgressView extends View {
         final int height = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
         final int width = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
         final int min = Math.min(width, height);
-        setMeasuredDimension(min + 2 * STROKE_WIDTH + (int) mMaxPaint.measureText(maxTitle), min + 2 * STROKE_WIDTH);
+        setMeasuredDimension(min + 2 * STROKE_WIDTH, min + 2 * STROKE_WIDTH);
+       // setMeasuredDimension(min + 2 * STROKE_WIDTH + (int) mMaxPaint.measureText(maxTitle), min + 2 * STROKE_WIDTH);
 
         mCircleBounds.set(STROKE_WIDTH, STROKE_WIDTH, min + STROKE_WIDTH, min + STROKE_WIDTH);
     }

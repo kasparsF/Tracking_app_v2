@@ -20,7 +20,7 @@ public class VideoActivity extends AppCompatActivity {
 
 
         // Find your VideoView in your video_main.xml layout
-        VideoView view = (VideoView)findViewById(R.id.videoView);
+         view = (VideoView)findViewById(R.id.videoView);
 
         if (mediaControls == null) {
             // create an object of media controller class

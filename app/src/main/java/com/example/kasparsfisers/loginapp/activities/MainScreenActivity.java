@@ -114,8 +114,8 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
         }
         // Setting up listView and adding adapter and contextMenu
         ListView coordinateListView = (ListView) findViewById(R.id.list);
-//        View emptyView = findViewById(R.id.empty_view);
-//        coordinateListView.setEmptyView(emptyView);
+       View emptyView = findViewById(R.id.empty_data_view);
+        coordinateListView.setEmptyView(emptyView);
         registerForContextMenu(coordinateListView);
         mCursorAdapter = new LocationCursorAdapter(this, null);
         coordinateListView.setAdapter(mCursorAdapter);

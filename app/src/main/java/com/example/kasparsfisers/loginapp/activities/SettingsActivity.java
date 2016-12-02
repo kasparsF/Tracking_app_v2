@@ -10,6 +10,8 @@ import android.widget.RadioGroup;
 import com.example.kasparsfisers.loginapp.R;
 import com.example.kasparsfisers.loginapp.utils.SharedPreferencesUtils;
 
+import static com.example.kasparsfisers.loginapp.R.color.grey;
+
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
     RadioGroup radioGroup1, radioGroup2, radioGroup3, radioGroup4, radioGroup5;
@@ -32,8 +34,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private static final String COLOR_BLACK = "#000000";
     private static final String COLOR_ORANGE = "#EF6C00";
     private static final String COLOR_GREY = "#787878";
+    private static final String COLOR_GREY_DARK = "#3f3f3e";
     private static final String COLOR_GREEN = "#bada55";
     private static final String COLOR_YELLOW = "#FFF1E61E";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +128,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 colorOfText = COLOR_BLACK;
                 break;
             case R.id.textGrey:
-                colorOfText = COLOR_GREY;
+                colorOfText = COLOR_GREY_DARK;
                 break;
             case R.id.textRed:
                 colorOfText = COLOR_ORANGE;
