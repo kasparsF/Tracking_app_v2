@@ -5,7 +5,10 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,7 +18,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kasparsfisers.loginapp.R;
@@ -31,6 +36,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+
+import static android.R.attr.name;
+import static com.example.kasparsfisers.loginapp.R.id.placeName;
+import static com.example.kasparsfisers.loginapp.R.id.placePicture;
+import static com.google.android.gms.analytics.internal.zzy.v;
 
 public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback, LoaderManager.LoaderCallbacks<Cursor>, GoogleMap.InfoWindowAdapter {
     private static final int EXISTING_COORDINATES_LOADER = 0;
@@ -161,7 +173,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             Double myLatitude = cursor.getDouble(LatColumnIndex);
             Double myLongitude = cursor.getDouble(LonColumnIndex);
             String myPlaceName = cursor.getString(NameColumnIndex);
-          //  path = cursor.getString(PictureColumnIndex);
+            path = cursor.getString(PictureColumnIndex);
 
             if (myPlaceName.contains(LOCATION_SEPARATOR)) {
                 String[] parts = myPlaceName.split(LOCATION_SEPARATOR);
@@ -173,7 +185,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             }
 
             LatLng target = new LatLng(myLatitude, myLongitude);
-            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation));
+            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation).snippet(path));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, 13));
 
         }
@@ -220,7 +232,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
 
             LatLng target = new LatLng(myLatitude, myLongitude);
 
-            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation));
+            mMap.addMarker(new MarkerOptions().position(target).title(mapLocation).snippet(path));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, 10));
 
             cursor.moveToNext();
@@ -235,24 +247,6 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
     @Override
     public boolean onMarkerClick(Marker marker) {
 
-//
-//        if (!Functions.isEmpty(marker.getSnippet())) {
-//            Fragment fragment = new PlaceFragment();
-//
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//
-//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//            Bundle bundle = new Bundle();
-//            bundle.putString(CURRENT_PLACE_NAME, marker.getSnippet());
-//            fragment.setArguments(bundle);
-//
-//            fragmentTransaction.replace(R.id.fragment_container, fragment).commit();
-//            picture.setVisibility(View.VISIBLE);
-//            fab.setVisibility(View.VISIBLE);
-//            Toast.makeText(this, "" + marker.getTitle(), Toast.LENGTH_SHORT).show();
-//        }
-
         return false;
     }
 
@@ -265,6 +259,33 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
     @Override
     public View getInfoContents(Marker marker) {
         View view = LayoutInflater.from(this).inflate(R.layout.info_window, null, false);
+
+        ImageView img = (ImageView)view.findViewById(R.id.imageForMap);
+        TextView place = (TextView) view.findViewById(R.id.textViewForMap);
+        String pictureStr = marker.getSnippet();
+
+
+        place.setText(marker.getTitle());
+
+        if (!Functions.isEmpty(pictureStr)) {
+            ExifInterface exif = null;
+            try {
+                exif = new ExifInterface(pictureStr);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            byte[] imageData = exif.getThumbnail();
+            Bitmap thumbnail = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+
+            img.setImageBitmap(thumbnail);
+
+        } else {
+            img.setVisibility(View.GONE);
+        }
+
+
+
+
         return view;
     }
 }

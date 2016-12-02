@@ -28,5 +28,8 @@
     <string name="made_changes">Changes has been made</string>
     <string name="empty_error">Cant be empty</string>
 
+    <string name="delete_dialog_msg">Are you sure you want to delete all locations?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

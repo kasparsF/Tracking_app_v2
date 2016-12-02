@@ -1,11 +1,13 @@
 package com.example.kasparsfisers.loginapp.activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -305,7 +307,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
 
         } else if (id == R.id.nav_delete_all) {
 
-            deleteAllCoords();
+            showDeleteConfirmationDialog();
 
         } else if (id == R.id.nav_show_route) {
 
@@ -325,6 +327,9 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(MainScreenActivity.this, SettingsActivity.class));
 
+        } else if (id == R.id.nav_video) {
+            startActivity(new Intent(MainScreenActivity.this, VideoActivity.class));
+            Toast.makeText(this, "Playing video from assets", Toast.LENGTH_SHORT).show();
         }
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -469,5 +474,29 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
             }
 
         }
+    }
+
+    private void showDeleteConfirmationDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete all.
+                deleteAllCoords();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
