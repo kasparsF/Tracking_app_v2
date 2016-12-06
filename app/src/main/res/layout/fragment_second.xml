@@ -2,13 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dc8080"
+    android:background="#fb8c00"
     android:gravity="center">
 
     <TextView
-        android:text="Text about App!  Text about App!  Text about App!  Text about App!  Text about App!  Text about App!"
+        android:text="You can customize parameters in settings. For example, tracking interval, maximum location for one route."
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="45sp" />
+        android:textSize="30sp" />
+    <TextView
+        android:text="Displaying route - Shows all location in one map."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="30sp" />
 </LinearLayout>
+

@@ -22,7 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_custom_view);
         Bundle extras = getIntent().getExtras();
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (extras != null) {
             placeCount =  (int)extras.getFloat(Functions.CURRENT_LOC);

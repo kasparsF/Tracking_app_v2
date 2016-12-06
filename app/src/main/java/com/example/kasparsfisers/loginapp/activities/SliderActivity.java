@@ -33,7 +33,6 @@ public class SliderActivity extends AppCompatActivity {
 
         fragments.add(new FirstFragment());
         fragments.add(new SecondFragment());
-        fragments.add(new FirstFragment());
         fragments.add(new ThirdFragment());
 
         // Create an adapter that knows which fragment should be shown on each page

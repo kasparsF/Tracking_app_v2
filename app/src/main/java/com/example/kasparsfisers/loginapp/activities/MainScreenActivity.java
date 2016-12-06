@@ -142,6 +142,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
         super.onResume();
 
         progressView.refresh();
+        maxRows = preferences.getMaxLoc();
     }
 
     //Cursor loading
@@ -439,7 +440,7 @@ public class MainScreenActivity extends AppCompatActivity implements LoaderManag
     // Method for deleting all data from DB
     private void deleteAllCoords() {
         int rowsDeleted = getContentResolver().delete(LocationEntry.CONTENT_URI, null, null);
-
+        preferences.setDistance(0);
 
         File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), Functions.FOLDER_MAIN);
         if (dir.isDirectory()) {

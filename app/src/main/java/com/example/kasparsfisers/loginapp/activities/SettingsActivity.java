@@ -44,6 +44,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         radioGroup1 = (RadioGroup) findViewById(R.id.rGroup1);
         radioGroup2 = (RadioGroup) findViewById(R.id.rGroup2);
         radioGroup3 = (RadioGroup) findViewById(R.id.rGroup3);

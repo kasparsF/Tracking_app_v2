@@ -2,13 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFC46464"
+    android:background="#f57c00"
     android:gravity="center">
 
     <TextView
-        android:text="Text about App!  Text about App!  Text about App!  Text about App!  Text about App!  Text about App!"
+        android:text="Tracking App tracks your every day movements. Simply press start tracking button every time you go somewhere!"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="45sp" />
+        android:textSize="30sp" />
+
+    <TextView
+        android:text="You can add picture to location, delete, see picture by holding any location. Open map by pressing location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="30sp" />
 </LinearLayout>

@@ -30,14 +30,14 @@ public class VideoActivity extends AppCompatActivity {
         // set the media controller for video view
         view.setMediaController(mediaControls);
         // set the uri for the video view
-        String path = "android.resource://" + getPackageName() + "/" + R.raw.sample360;
+        String path = "android.resource://" + getPackageName() + "/" + R.raw.horses;
         view.setVideoURI(Uri.parse(path));
 
         // implement on completion listener on video view
         view.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                Toast.makeText(getApplicationContext(), "Thank You...!!!", Toast.LENGTH_LONG).show(); // display a toast when an video is completed
+                Toast.makeText(getApplicationContext(), "Done!!", Toast.LENGTH_LONG).show(); // display a toast when an video is completed
             }
         });
         view.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -47,6 +47,7 @@ public class VideoActivity extends AppCompatActivity {
                 return false;
             }
         });
+        view.start();
     }
     }
 

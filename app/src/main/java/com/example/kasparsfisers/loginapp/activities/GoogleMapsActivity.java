@@ -7,6 +7,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Location;
 import android.media.ExifInterface;
 import android.net.Uri;
@@ -36,10 +37,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.IOException;
 
 import static android.R.attr.name;
+import static com.example.kasparsfisers.loginapp.R.id.map;
 import static com.example.kasparsfisers.loginapp.R.id.placeName;
 import static com.example.kasparsfisers.loginapp.R.id.placePicture;
 import static com.google.android.gms.analytics.internal.zzy.v;
@@ -54,7 +57,6 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
     private GoogleMap mMap;
     private String mapLocation;
     boolean allTable = false;
-    RelativeLayout picture;
     private String path;
     SharedPreferencesUtils preferences;
     FragmentManager fm = getSupportFragmentManager();
@@ -68,10 +70,8 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
         setContentView(R.layout.activity_google_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(map);
         mapFragment.getMapAsync(this);
-        picture = (RelativeLayout) findViewById(R.id.fragment_container);
-        picture.setVisibility(View.GONE);
         Intent intent = getIntent();
         mCurrentCoordinatesUri = intent.getData();
 
@@ -80,19 +80,6 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
         } else {
             allTable = false;
         }
-
-         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.GONE);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                picture.setVisibility(View.GONE);
-                fab.setVisibility(View.GONE);
-            }
-        });
-
-
-
 
      fabEdit = (FloatingActionButton) findViewById(R.id.fab_edit);
     fabEdit.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +108,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
 
         mMap.setOnMarkerClickListener(this);
         mMap.setInfoWindowAdapter(this);
+
 
     }
 
@@ -204,7 +192,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
         int PictureColumnIndex = cursor.getColumnIndex(LocationContract.LocationEntry.COLUMN_PICTURE_URI);
 
         float distanceInMeters = 0;
-
+        PolylineOptions options = new PolylineOptions().width(5).color(Color.BLUE).geodesic(true);
 
         while (!cursor.isAfterLast()) {
             Double myLatitude = cursor.getDouble(LatColumnIndex);
@@ -233,6 +221,8 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             LatLng target = new LatLng(myLatitude, myLongitude);
 
             mMap.addMarker(new MarkerOptions().position(target).title(mapLocation).snippet(path));
+            options.add(target);
+
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(target, 10));
 
             cursor.moveToNext();
@@ -240,6 +230,7 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
             loc1.setLatitude(myLatitude);
             loc1.setLongitude(myLongitude);
         }
+        mMap.addPolyline(options);
         preferences = SharedPreferencesUtils.getInstance(this);
         preferences.setDistance(distanceInMeters);
     }
@@ -282,9 +273,6 @@ public class GoogleMapsActivity extends FragmentActivity implements GoogleMap.On
         } else {
             img.setVisibility(View.GONE);
         }
-
-
-
 
         return view;
     }

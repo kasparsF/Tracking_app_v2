@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e9a6a6"
+    android:background="#ff9800"
     android:gravity="center">
 
     <TextView
-        android:text="Text about App!  Text about App!  Text about App!  Text about App!  Text about App!  Text about App!"
+        android:text="You can check your profile, where you can find distance, place count, add profile image."
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="45sp" />
+        android:textSize="30sp" />
 
     <Button
         android:text="To Main Screen"

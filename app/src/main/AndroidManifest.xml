@@ -50,9 +50,13 @@
         <activity
             android:name=".activities.ProfileActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="Profile"
+            android:parentActivityName=".activities.MainScreenActivity"/>
         <activity android:name=".activities.GalleryActivity" />
-        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".activities.MainScreenActivity"/>
         <activity android:name=".activities.DisplayPlaceActivity" />
         <activity
             android:name=".activities.VideoActivity"
